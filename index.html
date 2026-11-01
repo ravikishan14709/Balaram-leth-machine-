@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BALARAM LATHE MACHINE BARADWAR - Konoha Precision Mechanics</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Rajdhani, Bangers, Chakra Petch, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Chakra+Petch:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons for Industrial & Ninja elements -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ninjaDark: '#070b14',
+            ninjaSlate: '#0e1626',
+            ninjaCard: '#141e34',
+            ninjaBorder: '#233252',
+            konohaOrange: '#ff6b00',
+            konohaFlame: '#ea580c',
+            chakraCyan: '#06b6d4',
+            chakraBlue: '#0284c7',
+            chakraSpark: '#38bdf8',
+            scrollGold: '#fbbf24'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Rajdhani', 'sans-serif'],
+            ninja: ['Bangers', 'cursive'],
+            tech: ['Chakra Petch', 'sans-serif']
+          },
+          boxShadow: {
+            'chakra': '0 0 25px rgba(6, 182, 212, 0.35)',
+            'rasengan': '0 0 35px rgba(255, 107, 0, 0.45)',
+            'seal': '0 0 18px rgba(251, 191, 36, 0.35)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Naruto Chakra Grid & Industrial Sparks */
+    .ninja-bg-pattern {
+      background-color: #070b14;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(255, 107, 0, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(6, 182, 212, 0.09) 0%, transparent 45%),
+        linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 107, 0, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    /* Rotating Lathe Chuck Animation */
+    @keyframes rotateChuck {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .lathe-spin {
+      animation: rotateChuck 14s linear infinite;
+    }
+    .lathe-spin-reverse {
+      animation: rotateChuck 22s linear infinite reverse;
+    }
+
+    /* Welding Arc Flash Animation */
+    @keyframes arcFlash {
+      0%, 100% { opacity: 0.15; transform: scale(1); filter: drop-shadow(0 0 5px #38bdf8); }
+      50% { opacity: 0.85; transform: scale(1.08); filter: drop-shadow(0 0 25px #06b6d4); }
+      60% { opacity: 0.4; }
+      75% { opacity: 0.95; filter: drop-shadow(0 0 30px #ffffff); }
+    }
+    .welding-spark-effect {
+      animation: arcFlash 2.5s infinite ease-in-out;
+    }
+
+    /* Floating Chakra Runes */
+    @keyframes floatRune {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(4deg); }
+    }
+    .chakra-float {
+      animation: floatRune 6s ease-in-out infinite;
+    }
+
+    /* Uzumaki Spiral SVG rotation */
+    .uzumaki-spin {
+      animation: rotateChuck 18s linear infinite;
+    }
+
+    /* Custom Ninja Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070b14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #233252;
+      border-radius: 4px;
+      border: 1px solid #ff6b00;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff6b00;
+    }
+  </style>
+</head>
+
+<body class="text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-konohaOrange selection:text-black ninja-bg-pattern min-h-screen flex flex-col relative">
+
+  <!-- ================= DYNAMIC BACKGROUND: NARUTO MECHANICAL CHAKRA MOTIFS ================= -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-35">
+    <svg class="absolute -right-20 -top-20 w-96 h-96 lathe-spin text-konohaOrange/20" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.8">
+      <circle cx="100" cy="100" r="75" stroke-dasharray="8 6"/>
+      <circle cx="100" cy="100" r="45"/>
+      <circle cx="100" cy="100" r="20" stroke-width="3"/>
+      <rect x="94" y="15" width="12" height="40" rx="2" fill="currentColor"/>
+      <rect x="25" y="130" width="12" height="40" rx="2" transform="rotate(-120 31 150)" fill="currentColor"/>
+      <rect x="160" y="130" width="12" height="40" rx="2" transform="rotate(120 166 150)" fill="currentColor"/>
+    </svg>
+
+    <div class="absolute -left-16 bottom-10 w-80 h-80 chakra-float">
+      <svg class="w-full h-full text-chakraCyan/20 welding-spark-effect" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M30 170 L90 100 L115 125 L170 30" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M90 100 L75 80 M90 100 L110 85 M90 100 L85 120 M90 100 L60 105" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="90" cy="100" r="9" fill="#06b6d4" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <svg class="absolute right-10 bottom-6 w-64 h-64 lathe-spin-reverse text-slate-700/25" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+      <circle cx="50" cy="50" r="40" stroke-dasharray="4 4" stroke-width="1.5"/>
+      <circle cx="50" cy="50" r="28" stroke-width="2"/>
+      <circle cx="50" cy="50" r="14" stroke-width="2.5"/>
+      <line x1="50" y1="2" x2="50" y2="98" stroke-width="1"/>
+      <line x1="2" y1="50" x2="98" y2="50" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- ================= MASTER TOAST NOTIFICATIONS ================= -->
+  <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-2"></div>
+
+  <!-- ================= INSTANT ADMIN PAYMENT ALERT BANNER ================= -->
+  <div id="instantPayBanner" class="hidden fixed top-0 inset-x-0 z-50 bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-600 text-white px-4 py-3 shadow-2xl flex items-center justify-between border-b-2 border-emerald-300 animate-bounce">
+    <div class="flex items-center gap-3">
+      <i class="fa-solid fa-bell text-2xl text-yellow-300 animate-spin"></i>
+      <div>
+        <span class="font-bold text-xs uppercase font-tech tracking-wider block text-yellow-200">🔔 नया पेमेंट नोटिफिकेशन प्राप्त हुआ!</span>
+        <span id="instantPayText" class="text-xs sm:text-sm font-semibold font-tech">रुपये प्राप्त हुए</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="openSecretAdminAuth()" class="px-3 py-1 bg-white text-emerald-800 font-bold text-xs rounded-lg hover:bg-yellow-300 transition font-tech">
+        लेजर देखें
+      </button>
+      <button onclick="dismissInstantPayBanner()" class="text-white hover:text-slate-200 p-1">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= EMERGENCY LOCKDOWN (KONOHA DEFENSE BARRIER) ================= -->
+  <div id="maintenanceScreen" class="hidden fixed inset-0 z-50 bg-ninjaDark/98 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center">
+    <div class="max-w-xl w-full bg-ninjaSlate border-2 border-red-500/70 rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+      
+      <div class="w-20 h-20 mx-auto rounded-2xl bg-red-950/80 border-2 border-red-500 flex items-center justify-center text-red-500 mb-6 shadow-lg shadow-red-500/20 animate-pulse">
+        <i class="fa-solid fa-shield-halved text-4xl"></i>
+      </div>
+
+      <span class="inline-block px-3.5 py-1 rounded-full bg-red-900/40 text-red-400 font-tech uppercase text-xs tracking-widest border border-red-700/60 mb-3" data-i18n="lockdownBadge">
+        🚨 KONOHA DEFENSE BARRIER ACTIVATED • LOCKDOWN
+      </span>
+      
+      <h1 class="text-3xl sm:text-4xl font-black font-ninja uppercase tracking-wider text-red-400 mb-3" data-i18n="lockdownTitle">
+        कार्यशाला अस्थायी रूप से बंद है
+      </h1>
+      
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-8" data-i18n="lockdownDesc">
+        बलराम लेथ मशीन बाराद्वार की ऑनलाइन सेवाएं एडमिन द्वारा रोक दी गई हैं। यदि आपको जेसीबी, ट्रैक्टर या हेवी बुशिंग/वेल्डिंग का अति-आवश्यक काम कराना है तो नीचे दिए गए नंबर पर तुरंत संपर्क करें।
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <a id="maintCallBtn" href="tel:+919876543210" class="flex items-center justify-center gap-2 py-3.5 px-5 bg-gradient-to-r from-red-600 to-konohaFlame text-white font-bold rounded-xl shadow-lg hover:brightness-110 transition font-tech">
+          <i class="fa-solid fa-phone-volume"></i>
+          <span data-i18n="emergencyCallBtn">सीधा फोन लगाएं (Call Now)</span>
+        </a>
+        <a id="maintWaBtn" href="#" target="_blank" class="flex items-center justify-center gap-2 py-3.5 px-5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition font-tech">
+          <i class="fa-brands fa-whatsapp text-lg"></i>
+          <span data-i18n="emergencyWaBtn">व्हाट्सएप संपर्क</span>
+        </a>
+      </div>
+
+      <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+        <span>📍 Baradwar (Champa - Raigarh Line), CG</span>
+        <button onclick="openSecretAdminAuth()" class="text-konohaOrange hover:text-white px-3 py-1.5 rounded-lg bg-ninjaCard border border-konohaOrange/50 font-tech flex items-center gap-1.5 hover:bg-konohaOrange hover:text-black transition shadow-seal">
+          <i class="fa-solid fa-key"></i> <span data-i18n="adminUnsealBtn">🔐 गुप्त अनसील (एडमिन लॉगिन)</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SECRET 16-DIGIT ADMIN PASSCODE MODAL ================= -->
+  <div id="secretAdminAuthModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-ninjaCard border-2 border-konohaOrange rounded-3xl p-7 shadow-2xl relative text-center space-y-5">
+      
+      <button onclick="closeSecretAdminAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-ninjaSlate border-2 border-konohaOrange text-konohaOrange flex items-center justify-center shadow-seal">
+        <i class="fa-solid fa-fingerprint text-3xl"></i>
+      </div>
+
+      <div>
+        <span class="text-[10px] font-tech text-konohaOrange bg-konohaOrange/10 px-2.5 py-0.5 rounded uppercase tracking-widest border border-konohaOrange/30">
+          AUTHORIZED SHINOBI KEY ONLY
+        </span>
+        <h3 class="text-2xl font-black font-ninja uppercase tracking-wider text-white mt-2" data-i18n="adminModalTitle">
+          गुप्त एडमिन प्रमाणीकरण
+        </h3>
+        <p class="text-xs text-slate-400 mt-1" data-i18n="adminModalSub">
+          वेबसाइट नियंत्रण, किल-स्विच और UPI सेटिंग्स खोलने के लिए अपना 16-अंकों का मास्टर पासकोड दर्ज करें।
+        </p>
+      </div>
+
+      <form onsubmit="verifySecretAdminKey(event)" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-tech uppercase text-slate-300 mb-1">16-Digit Master Passcode *</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="adminModalKeyInput" 
+              maxlength="16" 
+              minlength="16" 
+              placeholder="16-Digit Passcode" 
+              required 
+              oninput="onSecretAdminKeyInput(this.value)"
+              class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-3 text-sm text-konohaOrange font-mono tracking-widest focus:outline-none focus:border-konohaOrange pr-11">
+            <button 
+              type="button" 
+              onclick="toggleInputVisibility('adminModalKeyInput', 'eyeIconModal')" 
+              class="absolute right-3.5 top-3.5 text-slate-400 hover:text-white transition">
+              <i class="fa-solid fa-eye" id="eyeIconModal"></i>
+            </button>
+          </div>
+          <div class="flex justify-between items-center text-[11px] font-tech text-slate-400 mt-1.5">
+            <span data-i18n="req16Notice">लंबाई: ठीक 16 अंक</span>
+            <span id="secretKeyLengthCounter" class="text-konohaOrange font-bold">0 / 16</span>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-konohaOrange to-konohaFlame hover:brightness-110 text-black font-bold uppercase rounded-xl transition font-tech flex items-center justify-center gap-2 shadow-rasengan">
+          <i class="fa-solid fa-unlock-keyhole"></i>
+          <span data-i18n="btnSecretUnlock">एडमिन कंट्रोल रूम खोलें</span>
+        </button>
+      </form>
+
+      <div class="text-[10px] text-slate-500 font-tech">
+        <span>Press <kbd class="px-1 py-0.5 bg-ninjaSlate border border-slate-700 rounded text-slate-300 font-mono">Shift + A</kbd> or Double-Click Logo anytime</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SECRET ADMIN CONTROL ROOM MODAL ================= -->
+  <div id="adminControlRoomModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="max-w-4xl w-full bg-ninjaCard border-2 border-konohaOrange/70 rounded-3xl p-6 sm:p-8 shadow-2xl relative my-auto max-h-[92vh] overflow-y-auto">
+      
+      <div class="flex items-center justify-between border-b border-ninjaBorder pb-4 mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-konohaOrange/20 border border-konohaOrange text-konohaOrange flex items-center justify-center shadow-seal">
+            <i class="fa-solid fa-gears text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black font-ninja uppercase tracking-wider text-white">
+              एडमिन गुप्त कंट्रोल रूम (Admin Control Room)
+            </h3>
+            <span class="text-xs text-chakraCyan font-tech">BALARAM LATHE MACHINE • 16-DIGIT PROTECTED</span>
+          </div>
+        </div>
+
+        <button onclick="closeAdminControlRoom()" class="px-3.5 py-1.5 bg-ninjaSlate hover:bg-red-900/40 text-slate-300 hover:text-red-400 rounded-xl border border-slate-700 text-xs font-tech transition">
+          <i class="fa-solid fa-xmark mr-1"></i> बंद करें (Exit)
+        </button>
+      </div>
+
+      <!-- Control 1: Master Emergency Kill Switch -->
+      <div id="adminKillSwitchBox" class="bg-ninjaSlate border-2 border-emerald-500/50 rounded-2xl p-5 sm:p-6 mb-6 shadow-lg">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+              <span class="text-xs font-tech uppercase tracking-widest text-emerald-400 font-bold" data-i18n="killSwitchLabel">MASTER KILL SWITCH</span>
+            </div>
+            <h4 id="adminKillStatusText" class="text-xl sm:text-2xl font-black font-ninja uppercase text-emerald-400 mt-1">
+              वेबसाइट चालू है (Website is LIVE)
+            </h4>
+            <p class="text-xs text-slate-300 max-w-lg mt-1" data-i18n="killSwitchDetail">
+              एक क्लिक में पूरी वेबसाइट बंद करें। बंद होने पर ग्राहकों को केवल इमरजेंसी मेंटेनेंस स्क्रीन और संपर्क नंबर दिखेगा।
+            </p>
+          </div>
+
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="adminMasterKillToggle" onchange="handleAdminKillToggle()" class="sr-only peer">
+            <div class="w-16 h-9 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all peer-checked:bg-emerald-500"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Control 2: Contact Numbers & WhatsApp Setup (NEWLY ADDED) -->
+      <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5 mb-6">
+        <div class="flex items-center gap-2 mb-3 pb-2 border-b border-ninjaBorder">
+          <i class="fa-solid fa-phone text-konohaOrange"></i>
+          <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white">
+            वर्कशॉप संपर्क नंबर सेटिंग्स (Contact & WhatsApp Details)
+          </h4>
+        </div>
+        <form onsubmit="handleAdminSaveContacts(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1">कॉलिंग नंबर (Calling Phone - 10 Digits)</label>
+            <input type="tel" id="adminCallPhoneInput" required pattern="[0-9]{10}" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-konohaOrange">
+          </div>
+          <div>
+            <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1">व्हाट्सएप नंबर (WhatsApp - 10 Digits)</label>
+            <input type="tel" id="adminWaPhoneInput" required pattern="[0-9]{10}" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-konohaOrange">
+          </div>
+          <div class="sm:col-span-2">
+            <button type="submit" class="w-full py-2 bg-scrollGold hover:bg-amber-500 text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-check"></i>
+              <span>संपर्क नंबर सेव करें (Update Numbers)</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Control 3: UPI & QR Code Settings and Passcode Management -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-ninjaBorder">
+            <i class="fa-solid fa-qrcode text-konohaOrange"></i>
+            <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white" data-i18n="upiSettingsHeading">
+              UPI व QR कोड सेटिंग्स (Admin Only)
+            </h4>
+          </div>
+          <p class="text-[11px] text-slate-400 mb-3" data-i18n="upiSettingsInfo">
+            यहां दिया गया UPI ID और नाम तुरंत कस्टमर वाले QR कोड में अपडेट हो जाएगा।
+          </p>
+
+          <form onsubmit="handleAdminSaveUpiConfig(event)" class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblShopName">मर्चेंट / वर्कशॉप नाम</label>
+              <input type="text" id="adminMerchantInput" required class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-konohaOrange">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblUpiId">दुकान की UPI ID (VPA)</label>
+              <input type="text" id="adminUpiInput" required class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-konohaOrange">
+            </div>
+
+            <button type="submit" class="w-full py-2.5 bg-konohaOrange hover:bg-konohaFlame text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-1.5 shadow-rasengan">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span data-i18n="btnSaveUpi">UPI सेटिंग्स सेव करें</span>
+            </button>
+          </form>
+        </div>
+
+        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-ninjaBorder">
+            <i class="fa-solid fa-lock text-chakraCyan"></i>
+            <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white" data-i18n="passcodeHeading">
+              16-अंकों का मास्टर पासकोड बदलें
+            </h4>
+          </div>
+          <p class="text-[11px] text-slate-400 mb-3" data-i18n="passcodeInfo">
+            पासकोड हमेशा 16 अंकों का रखें ताकि कोई दूसरा इसे खोल न सके।
+          </p>
+
+          <form onsubmit="handleAdminChangeKey(event)" class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblNewKey">नया 16-अंक पासकोड *</label>
+              <input type="password" id="adminNewKey" maxlength="16" minlength="16" required placeholder="16 Digits" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-chakraCyan">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblRepeatKey">दोबारा दर्ज करें *</label>
+              <input type="password" id="adminConfirmKey" maxlength="16" minlength="16" required placeholder="Repeat 16 Digits" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-chakraCyan">
+            </div>
+
+            <button type="submit" class="w-full py-2.5 bg-chakraCyan hover:bg-chakraBlue text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-1.5 shadow-chakra">
+              <i class="fa-solid fa-check"></i>
+              <span data-i18n="btnSavePasscode">नया पासकोड सुरक्षित करें</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Customer Submissions: Tickets & UTR Ledger -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-ninjaBorder pb-2">
+            <span class="text-xs font-bold font-tech uppercase text-konohaOrange">
+              <i class="fa-solid fa-wrench mr-1"></i> मशीन समस्या टिकट व फोटो/वीडियो (<span id="ticketCountBadge">0</span>)
+            </span>
+            <button onclick="clearAllTickets()" class="text-[11px] text-red-400 hover:underline">Clear</button>
+          </div>
+          <div id="adminTicketList" class="max-h-56 overflow-y-auto space-y-2 pr-1"></div>
+        </div>
+
+        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-ninjaBorder pb-2">
+            <span class="text-xs font-bold font-tech uppercase text-emerald-400">
+              <i class="fa-solid fa-receipt mr-1"></i> भुगतान UTR रसीदें (<span id="utrCountBadge">0</span>)
+            </span>
+            <button onclick="clearAllUtrs()" class="text-[11px] text-red-400 hover:underline">Clear</button>
+          </div>
+          <div id="adminUtrList" class="max-h-56 overflow-y-auto space-y-2 pr-1"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= TOP HEADER (NAV & CONTROLS) ================= -->
+  <header class="sticky top-0 z-40 bg-ninjaDark/95 backdrop-blur-md border-b border-ninjaBorder">
+    <div class="container mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
+      
+      <!-- Brand Logo (Double-click opens secret admin) -->
+      <div class="flex items-center gap-3 cursor-pointer select-none group" ondblclick="triggerSecretAdminByLogo()" title="Double click for secret admin">
+        <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-konohaOrange via-konohaFlame to-chakraBlue flex items-center justify-center shadow-rasengan overflow-hidden border border-amber-400/40 group-hover:scale-105 transition">
+          <svg class="w-8 h-8 text-black uzumaki-spin opacity-85" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a6 6 0 1 1-6 6 6 6 0 0 1 6-6zm0 4a2 2 0 1 0 2 2 2 2 0 0 0-2-2z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-ninja text-xl sm:text-2xl text-white tracking-wider">BALARAM</span>
+            <span class="font-ninja text-xl sm:text-2xl text-konohaOrange tracking-wider">LATHE MACHINE</span>
+          </div>
+          <div class="flex items-center gap-2 text-[11px] font-tech text-chakraCyan tracking-wide">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>BARADWAR • HEAVY PRECISION MECHANICAL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-ninjaCard border border-chakraBlue/40 text-xs font-tech font-bold text-chakraSpark hover:border-konohaOrange transition shadow-chakra">
+          <i class="fa-solid fa-language text-konohaOrange"></i>
+          <span id="langDisplayBadge">EN / हिंदी</span>
+        </button>
+
+        <a id="headerQuickCall" href="tel:+919876543210" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-konohaOrange/15 border border-konohaOrange/50 text-xs font-tech font-bold text-konohaOrange hover:bg-konohaOrange hover:text-black transition">
+          <i class="fa-solid fa-phone"></i>
+          <span id="headerQuickCallText">+91 98765 43210</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- CUSTOMER-ONLY TABS (NO ADMIN TAB VISIBLE) -->
+    <div class="bg-ninjaSlate/95 border-t border-ninjaBorder shadow-inner">
+      <div class="container mx-auto px-4 flex items-center justify-center gap-2 py-2">
+        <button id="tabBtn-services" onclick="switchCustomerTab('services')" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-tech font-bold uppercase tracking-wider transition text-konohaOrange bg-konohaOrange/10 border border-konohaOrange/50 shadow-seal">
+          <i class="fa-solid fa-fire text-konohaOrange"></i>
+          <span data-i18n="tabServices">🛠️ 1. सेवाएं (Jutsu Services)</span>
+        </button>
+
+        <button id="tabBtn-dispatch" onclick="switchCustomerTab('dispatch')" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-tech font-bold uppercase tracking-wider transition text-slate-400 hover:text-white hover:bg-ninjaCard border border-transparent">
+          <i class="fa-solid fa-bolt text-chakraCyan"></i>
+          <span data-i18n="tabDispatch">⚡ 2. समस्या बताएं (Dispatch Hub)</span>
+        </button>
+
+        <button id="tabBtn-payment" onclick="switchCustomerTab('payment')" class="tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-tech font-bold uppercase tracking-wider transition text-slate-400 hover:text-white hover:bg-ninjaCard border border-transparent">
+          <i class="fa-solid fa-qrcode text-emerald-400"></i>
+          <span data-i18n="tabPayment">💳 3. चक्रा पेमेंट (UPI QR Pay)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN TAB VIEW AREA ================= -->
+  <main class="flex-1 container mx-auto px-4 py-6 max-w-6xl relative z-10">
+    
+    <!-- TAB 1: SERVICES -->
+    <div id="tabContent-services" class="tab-page space-y-6">
+      <div class="bg-gradient-to-r from-ninjaCard via-ninjaSlate to-ninjaCard border-2 border-konohaOrange/30 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-16 -top-16 w-56 h-56 bg-konohaOrange/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-2xl relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-konohaOrange/15 border border-konohaOrange/40 text-konohaOrange text-xs font-tech uppercase tracking-widest mb-3">
+            <i class="fa-solid fa-gear lathe-spin"></i>
+            <span data-i18n="heroBadge">FIRE STYLE: HEAVY MECHANICAL PRECISION</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-black font-ninja uppercase tracking-wide text-white mb-2">
+            बलराम लेथ मशीन बाराद्वार
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed" data-i18n="heroSub">
+            जेसीबी (Backhoe Loader) बुशिंग, हेवी लेथ टर्निंग, आर्क/मिग वेल्डिंग, रेडियल ड्रिलिंग और फैब्रिकेशन का अभेद्य व विश्वसनीय समाधान।
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Service 1 -->
+        <div class="bg-ninjaCard border border-ninjaBorder hover:border-konohaOrange rounded-2xl p-6 transition duration-200 flex flex-col justify-between group shadow-lg">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-konohaOrange/15 border border-konohaOrange/40 flex items-center justify-center text-konohaOrange mb-4 group-hover:scale-105 transition">
+              <i class="fa-solid fa-truck-pickup text-xl"></i>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xl font-bold font-display uppercase tracking-wider text-white" data-i18n="srv1Title">JCB & Earth Movers Bushing</h3>
+              <span class="text-[10px] font-tech text-konohaOrange bg-konohaOrange/10 px-2 py-0.5 rounded border border-konohaOrange/30">Top Specialty</span>
+            </div>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="srv1Desc">JCB 3DX/4DX बूम पिन, डिपर, बकेट पिन, किंगपिन रीबिल्डिंग और भारी हाइड्रोलिक रॉड प्ले को शून्य टॉलरेंस के साथ फिट करना।</p>
+            <ul class="text-xs text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-3 mb-5 font-tech">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-konohaOrange"></i> <span data-i18n="srv1F1">बूम, डिपर व किंगपिन बुश रिप्लेसमेंट</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-konohaOrange"></i> <span data-i18n="srv1F2">हार्ड एंड टेम्पर हाई-ग्रेड स्टील पिन निर्माण</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-konohaOrange"></i> <span data-i18n="srv1F3">लाइन बोरिंग व सटीक माइक्रोमीटर रीमिंग</span></li>
+            </ul>
+          </div>
+          <button onclick="bookDirectJob('JCB & Backhoe Bushing Work')" class="w-full py-2.5 rounded-xl bg-ninjaSlate hover:bg-konohaOrange hover:text-black text-slate-200 text-xs font-tech font-bold uppercase transition flex items-center justify-center gap-2 border border-slate-700">
+            <span data-i18n="orderService">यह काम चुनें (Select Job)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="bg-ninjaCard border border-ninjaBorder hover:border-chakraCyan rounded-2xl p-6 transition duration-200 flex flex-col justify-between group shadow-lg">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-chakraCyan/15 border border-chakraCyan/40 flex items-center justify-center text-chakraCyan mb-4 group-hover:scale-105 transition">
+              <i class="fa-solid fa-compact-disc text-xl lathe-spin"></i>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xl font-bold font-display uppercase tracking-wider text-white" data-i18n="srv2Title">Heavy Lathe Turning</h3>
+              <span class="text-[10px] font-tech text-chakraCyan bg-chakraCyan/10 px-2 py-0.5 rounded border border-chakraCyan/30">12ft Bed</span>
+            </div>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="srv2Desc">लंबे व भारी शाफ्ट टर्निंग, थ्रेडिंग (आंतरिक/बाहरी), रोलर री-फेसिंग, कपलिंग बोरिंग और की-वे ग्रूव कटिंग।</p>
+            <ul class="text-xs text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-3 mb-5 font-tech">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-chakraCyan"></i> <span data-i18n="srv2F1">शाफ्ट सीधा करना (Shaft Truing)</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-chakraCyan"></i> <span data-i18n="srv2F2">मेट्रिक, बीएसडब्ल्यू, एसीएमई थ्रेड कटिंग</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-chakraCyan"></i> <span data-i18n="srv2F3">क्रशर और राइस मिल रोलर मेंटेनेंस</span></li>
+            </ul>
+          </div>
+          <button onclick="bookDirectJob('Heavy Lathe Turning & Threading')" class="w-full py-2.5 rounded-xl bg-ninjaSlate hover:bg-chakraCyan hover:text-black text-slate-200 text-xs font-tech font-bold uppercase transition flex items-center justify-center gap-2 border border-slate-700">
+            <span data-i18n="orderService">यह काम चुनें (Select Job)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="bg-ninjaCard border border-ninjaBorder hover:border-konohaFlame rounded-2xl p-6 transition duration-200 flex flex-col justify-between group shadow-lg">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-red-500/15 border border-red-500/40 flex items-center justify-center text-red-400 mb-4 group-hover:scale-105 transition">
+              <i class="fa-solid fa-fire-burner text-xl welding-spark-effect"></i>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xl font-bold font-display uppercase tracking-wider text-white" data-i18n="srv3Title">ARC & MIG Crack Welding</h3>
+              <span class="text-[10px] font-tech text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/30">Heavy Duty</span>
+            </div>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="srv3Desc">टूटे हुए चेसिस, ट्रैक्टर ट्रॉली एक्सल, जेसीबी बकेट क्रैक और भारी कास्ट आयरन की मजबूत वेल्डिंग।</p>
+            <ul class="text-xs text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-3 mb-5 font-tech">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-konohaFlame"></i> <span data-i18n="srv3F1">डीप पेनिट्रेशन 7018 लो-हाइड्रोजन इलेक्ट्रोड</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-konohaFlame"></i> <span data-i18n="srv3F2">कास्ट आयरन और अलॉय वेल्डिंग समाधान</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-konohaFlame"></i> <span data-i18n="srv3F3">गसेट प्लेट्स और चेसिस सुदृढ़ीकरण</span></li>
+            </ul>
+          </div>
+          <button onclick="bookDirectJob('Heavy ARC/MIG Crack Welding')" class="w-full py-2.5 rounded-xl bg-ninjaSlate hover:bg-konohaFlame hover:text-white text-slate-200 text-xs font-tech font-bold uppercase transition flex items-center justify-center gap-2 border border-slate-700">
+            <span data-i18n="orderService">यह काम चुनें (Select Job)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="bg-ninjaCard border border-ninjaBorder hover:border-chakraSpark rounded-2xl p-6 transition duration-200 flex flex-col justify-between group shadow-lg">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-sky-500/15 border border-sky-500/40 flex items-center justify-center text-chakraSpark mb-4 group-hover:scale-105 transition">
+              <i class="fa-solid fa-crosshairs text-xl"></i>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xl font-bold font-display uppercase tracking-wider text-white" data-i18n="srv4Title">Radial Drilling & Tapping</h3>
+              <span class="text-[10px] font-tech text-chakraSpark bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/30">Up to 50mm</span>
+            </div>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="srv4Desc">मोटी मेटल प्लेट्स, गर्डर, ऑटोमोबाइल हब और फ्लैंज में सटीक बोर ड्रिलिंग, काउंटर सिंकिंग और थ्रेड टैपिंग।</p>
+            <ul class="text-xs text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-3 mb-5 font-tech">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-chakraSpark"></i> <span data-i18n="srv4F1">50mm तक का सॉलिड ड्रिलिंग बोर</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-chakraSpark"></i> <span data-i18n="srv4F2">फ्लैंज PCD मार्किंग और परिशुद्ध बोर</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-chakraSpark"></i> <span data-i18n="srv4F3">टूटे बोल्ट/स्टड निकालना व री-थ्रेडिंग</span></li>
+            </ul>
+          </div>
+          <button onclick="bookDirectJob('Radial Drilling & Tapping')" class="w-full py-2.5 rounded-xl bg-ninjaSlate hover:bg-chakraSpark hover:text-black text-slate-200 text-xs font-tech font-bold uppercase transition flex items-center justify-center gap-2 border border-slate-700">
+            <span data-i18n="orderService">यह काम चुनें (Select Job)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="bg-ninjaCard border border-ninjaBorder hover:border-scrollGold rounded-2xl p-6 transition duration-200 flex flex-col justify-between group shadow-lg">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-scrollGold mb-4 group-hover:scale-105 transition">
+              <i class="fa-solid fa-cubes text-xl"></i>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xl font-bold font-display uppercase tracking-wider text-white" data-i18n="srv5Title">Heavy Metal Fabrication</h3>
+              <span class="text-[10px] font-tech text-scrollGold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">Custom Built</span>
+            </div>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="srv5Desc">ट्रैक्टर कल्टीवेटर, प्लाउ, ट्रॉली हुक, क्रशर प्लांट हॉपर, गेट्स एवं इंडस्ट्रियल हैवी एमएस फ्रेम निर्माण।</p>
+            <ul class="text-xs text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-3 mb-5 font-tech">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-scrollGold"></i> <span data-i18n="srv5F1">मजबूत एग्रीकल्चरल उपकरण फैब्रिकेशन</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-scrollGold"></i> <span data-i18n="srv5F2">इंडस्ट्रियल शेड ब्रैकेट्स व स्ट्रक्चर</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-scrollGold"></i> <span data-i18n="srv5F3">कस्टम स्टील मॉडिफिकेशन</span></li>
+            </ul>
+          </div>
+          <button onclick="bookDirectJob('Heavy Metal Fabrication')" class="w-full py-2.5 rounded-xl bg-ninjaSlate hover:bg-scrollGold hover:text-black text-slate-200 text-xs font-tech font-bold uppercase transition flex items-center justify-center gap-2 border border-slate-700">
+            <span data-i18n="orderService">यह काम चुनें (Select Job)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="bg-ninjaCard border border-ninjaBorder hover:border-emerald-400 rounded-2xl p-6 transition duration-200 flex flex-col justify-between group shadow-lg">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-105 transition">
+              <i class="fa-solid fa-microchip text-xl"></i>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xl font-bold font-display uppercase tracking-wider text-white" data-i18n="srv6Title">Hydraulic Jack Rod Turning</h3>
+              <span class="text-[10px] font-tech text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">Zero Leak</span>
+            </div>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="srv6Desc">हाइड्रोलिक जैक रॉड स्क्रैच रिपेयर, ग्लैंड नट थ्रेडिंग, पिस्टन सील ग्रूव कटिंग और लीकेज-प्रूफ लेथ फिनिशिंग।</p>
+            <ul class="text-xs text-slate-400 space-y-1.5 border-t border-slate-800/80 pt-3 mb-5 font-tech">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-400"></i> <span data-i18n="srv6F1">हार्ड क्रोम रॉड री-पॉलिशिंग</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-400"></i> <span data-i18n="srv6F2">पिस्टन सील ग्रूव एक्यूरेट कटिंग</span></li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-400"></i> <span data-i18n="srv6F3">हाइड्रोलिक एंड-आई बोर रिपेयर</span></li>
+            </ul>
+          </div>
+          <button onclick="bookDirectJob('Hydraulic Cylinder & Rod Work')" class="w-full py-2.5 rounded-xl bg-ninjaSlate hover:bg-emerald-400 hover:text-black text-slate-200 text-xs font-tech font-bold uppercase transition flex items-center justify-center gap-2 border border-slate-700">
+            <span data-i18n="orderService">यह काम चुनें (Select Job)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 3-WAY BREAKDOWN DISPATCH HUB -->
+    <div id="tabContent-dispatch" class="tab-page hidden space-y-6">
+      <div class="bg-ninjaCard border border-chakraBlue/30 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+        <div class="text-center max-w-xl mx-auto mb-6">
+          <span class="text-chakraCyan font-tech font-bold uppercase text-xs tracking-widest px-3 py-1 bg-chakraCyan/10 rounded-full border border-chakraCyan/30" data-i18n="dispatchBadge">
+            3-WAY SHINOBI COMM CHANNEL
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-ninja uppercase text-white mt-2" data-i18n="dispatchHeading">
+            समस्या बताने के 3 सीधे माध्यम
+          </h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1" data-i18n="dispatchSub">
+            इमरजेंसी कॉल लगाएं, फोटो/वीडियो सहित व्हाट्सएप भेजें या सीधे वेबसाइट पर टिकट बनाकर रजिस्टर करें।
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Mode 1: Direct Call -->
+          <a id="dispatchCallBtn" href="tel:+919876543210" class="flex flex-col items-center justify-center p-5 rounded-2xl bg-gradient-to-b from-ninjaSlate to-ninjaDark border border-slate-700 hover:border-konohaOrange transition group shadow-lg">
+            <div class="w-12 h-12 rounded-full bg-konohaOrange/15 text-konohaOrange flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i class="fa-solid fa-phone-volume text-xl"></i>
+            </div>
+            <span class="text-sm font-bold text-white font-tech uppercase" data-i18n="callChannelTitle">1. सीधा फोन कॉल</span>
+            <span id="dispatchCallText" class="text-xs text-slate-400 font-mono mt-1">+91 98765 43210</span>
+            <span class="text-[10px] text-konohaOrange mt-2 bg-konohaOrange/10 px-2 py-0.5 rounded font-tech" data-i18n="callChannelAction">तुरंत बात करें →</span>
+          </a>
+
+          <!-- Mode 2: WhatsApp Dispatch with Smart Pre-Prompting -->
+          <button onclick="handleWhatsAppCardClick()" class="flex flex-col items-center justify-center p-5 rounded-2xl bg-gradient-to-b from-ninjaSlate to-ninjaDark border border-slate-700 hover:border-emerald-500 transition group shadow-lg text-center">
+            <div class="w-12 h-12 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i class="fa-brands fa-whatsapp text-2xl"></i>
+            </div>
+            <span class="text-sm font-bold text-white font-tech uppercase" data-i18n="waChannelTitle">2. व्हाट्सएप विवरण</span>
+            <span id="dispatchWaText" class="text-xs text-slate-400 font-mono mt-1">+91 98765 43210</span>
+            <span class="text-[10px] text-emerald-400 mt-2 bg-emerald-500/10 px-2 py-0.5 rounded font-tech" data-i18n="waChannelAction">फोटो/विवरण भेजें →</span>
+          </button>
+
+          <!-- Mode 3: Direct Web Ticket -->
+          <a href="#ticketFormCard" class="flex flex-col items-center justify-center p-5 rounded-2xl bg-gradient-to-b from-ninjaSlate to-ninjaDark border border-slate-700 hover:border-chakraCyan transition group shadow-lg">
+            <div class="w-12 h-12 rounded-full bg-chakraCyan/15 text-chakraCyan flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i class="fa-solid fa-clipboard-list text-xl"></i>
+            </div>
+            <span class="text-sm font-bold text-white font-tech uppercase" data-i18n="webChannelTitle">3. डायरेक्ट वेब टिकट</span>
+            <span class="text-xs text-slate-400 font-mono mt-1" data-i18n="webChannelSub">Online Workshop Queue</span>
+            <span class="text-[10px] text-chakraCyan mt-2 bg-chakraCyan/10 px-2 py-0.5 rounded font-tech" data-i18n="webChannelAction">नीचे फॉर्म भरें ↓</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Online Problem Booking Ticket Form with Media Upload -->
+      <div id="ticketFormCard" class="bg-ninjaCard border border-ninjaBorder rounded-3xl p-6 sm:p-8 shadow-2xl relative transition-all duration-300">
+        <div class="flex items-center gap-2 mb-6 border-b border-ninjaBorder pb-4">
+          <i class="fa-solid fa-pen-to-square text-konohaOrange text-xl"></i>
+          <div>
+            <h3 class="text-xl font-bold font-display uppercase tracking-wider text-white" data-i18n="formTitle">
+              मशीन समस्या विवरण पत्र (Mechanical Ticket)
+            </h3>
+            <p class="text-xs text-slate-400" data-i18n="formSub">
+              यह सीधे वर्कशॉप एडमिन के डेटाबेस में सुरक्षित हो जाएगा।
+            </p>
+          </div>
+        </div>
+
+        <form id="problemTicketForm" onsubmit="handleProblemTicketSubmit(event)" class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-tech uppercase text-slate-300 mb-1" data-i18n="labelName">आपका नाम (Customer Name) *</label>
+              <input type="text" id="custNameInput" required placeholder="उदा. रवि कुमार / पटेल जी" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange transition">
+            </div>
+
+            <div>
+              <label class="block text-xs font-tech uppercase text-slate-300 mb-1" data-i18n="labelPhone">मोबाइल नंबर (Phone Number) *</label>
+              <input type="tel" id="custPhoneInput" required placeholder="10 अंकों का फोन नंबर" pattern="[0-9]{10}" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange transition">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-tech uppercase text-slate-300 mb-1" data-i18n="labelMachine">मशीन का प्रकार (Equipment Type) *</label>
+              <select id="custMachineInput" required class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange transition">
+                <option value="JCB 3DX / Backhoe Loader">JCB 3DX / 4DX (Backhoe Loader)</option>
+                <option value="Tractor Trolley / Axle">Tractor Trolley / Axle (ट्रैक्टर ट्रॉली)</option>
+                <option value="Poclain / Heavy Excavator">Poclain / Heavy Excavator</option>
+                <option value="Hydraulic Jack / Cylinder">Hydraulic Jack / Cylinder (हाइड्रोलिक)</option>
+                <option value="Crusher / Plant Machine Shaft">Crusher / Plant Machine Shaft</option>
+                <option value="Custom Lathe & Welding Job">Custom Lathe / Welding Work</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-tech uppercase text-slate-300 mb-1" data-i18n="labelCategory">कार्य श्रेणी (Job Category) *</label>
+              <input type="text" id="custJobInput" required placeholder="उदा. बूम बुश कट गया है / वेल्डिंग क्रैक" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange transition">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-tech uppercase text-slate-300 mb-1" data-i18n="labelUrgency">प्राथमिकता (Urgency Level)</label>
+              <select id="custUrgencyInput" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange transition">
+                <option value="Urgent (मशीन बंद है)">🚨 Urgent (इमरजेंसी - मशीन बंद है)</option>
+                <option value="Today (आज ही कराना है)" selected>⚡ Today (आज ही काम कराना है)</option>
+                <option value="Within 2-3 Days">📅 Within 2-3 Days (2-3 दिन में)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-tech uppercase text-slate-300 mb-1" data-i18n="labelLocation">गाड़ी/मशीन की लोकेशन (Site Location)</label>
+              <input type="text" id="custLocInput" placeholder="उदा. बाराद्वार, सक्ती, चांपा, खरसिया" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-tech uppercase text-slate-300 mb-1" data-i18n="labelDesc">समस्या का विवरण (Problem Details) *</label>
+            <textarea id="custDescInput" rows="3" required placeholder="क्या खराबी है, कौन सा पिन/बुश बदलना है, साइज या क्या समस्या आ रही है..." class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange transition"></textarea>
+          </div>
+
+          <!-- Attachment: Photo or Video Upload -->
+          <div class="p-4 rounded-2xl bg-ninjaSlate border border-dashed border-ninjaBorder">
+            <label class="block text-xs font-tech uppercase text-konohaOrange mb-1">
+              <i class="fa-solid fa-camera mr-1"></i> खराब हिस्से का फोटो या वीडियो जोड़ें (Photo/Video Upload)
+            </label>
+            <p class="text-[11px] text-slate-400 mb-2">टूटे हुए हिस्से, क्रैक या पिन की फोटो/छोटा वीडियो सेलेक्ट करें।</p>
+            <input type="file" id="custMediaInput" accept="image/*,video/*" onchange="handleMediaSelection(event)" class="text-xs text-slate-300 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-tech file:bg-konohaOrange file:text-black hover:file:bg-konohaFlame cursor-pointer">
+            
+            <div id="mediaPreviewWrap" class="hidden mt-3 pt-3 border-t border-ninjaBorder">
+              <span class="text-[10px] text-slate-400 uppercase font-tech block mb-1">प्रीव्यू (Preview):</span>
+              <div id="mediaPreviewContainer" class="max-w-xs rounded-xl overflow-hidden border border-slate-700 bg-ninjaDark"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <button type="submit" class="py-3 px-5 bg-konohaOrange hover:bg-konohaFlame text-black font-bold uppercase rounded-xl transition flex items-center justify-center gap-2 shadow-rasengan font-tech">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span data-i18n="btnSubmitTicket">वेबसाइट पर टिकट दर्ज करें (Submit)</span>
+            </button>
+            <button type="button" onclick="forwardTicketToWhatsAppWithValidation()" class="py-3 px-5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase rounded-xl transition flex items-center justify-center gap-2 font-tech shadow-lg">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              <span data-i18n="btnSendWa">व्हाट्सएप पर फॉरवर्ड करें</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 3: CHAKRA PAY GATEWAY (CUSTOMER SAFE) -->
+    <div id="tabContent-payment" class="tab-page hidden space-y-6">
+      <div class="bg-gradient-to-r from-ninjaCard via-ninjaSlate to-ninjaCard border border-chakraBlue/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-tech font-bold uppercase tracking-widest">
+            <i class="fa-solid fa-shield-check"></i>
+            <span data-i18n="paySecurityBadge">100% VERIFIED WORKSHOP UPI PORTAL</span>
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-ninja uppercase text-white mt-2" data-i18n="payHeading">
+            चक्रा पेमेंट गेटवे (Chakra Pay)
+          </h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1" data-i18n="paySub">
+            वर्कशॉप के आधिकारिक मर्चेंट QR को स्कैन करके Google Pay, PhonePe या Paytm से सुरक्षित टोकन या सर्विस पेमेंट करें।
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left: Customer-Facing Dynamic QR Box with 10-Min Railway Secure Session -->
+          <div class="lg:col-span-6 bg-ninjaDark border border-ninjaBorder rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center shadow-xl relative overflow-hidden">
+            
+            <!-- IRCTC / Railway-Style 10-Minute Secure Gateway Header -->
+            <div class="w-full bg-ninjaSlate border border-konohaOrange/40 rounded-2xl p-3.5 mb-5 flex items-center justify-between shadow-inner">
+              <div class="text-left">
+                <div class="flex items-center gap-1.5">
+                  <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span class="text-[10px] uppercase font-tech text-emerald-400 font-bold tracking-widest">IRCTC STYLE SECURE SESSION</span>
+                </div>
+                <div class="text-xs font-mono text-slate-300 font-bold mt-0.5">
+                  Txn ID: <span id="gatewaySessionTxnId" class="text-chakraCyan">BLM-TXN-000000</span>
+                </div>
+              </div>
+
+              <!-- 10-Minute Timer Badge -->
+              <div class="bg-ninjaDark/90 border border-konohaOrange/60 rounded-xl px-3 py-1.5 text-right shadow-seal">
+                <span class="text-[9px] uppercase font-tech text-slate-400 block">सत्र समाप्ति (Time Left)</span>
+                <span id="gatewayCountdownTimer" class="font-mono text-base font-black text-konohaOrange tracking-wider">10:00</span>
+              </div>
+            </div>
+
+            <div class="w-full flex items-center justify-between border-b border-ninjaBorder pb-3 mb-5">
+              <div class="text-left">
+                <span class="text-[10px] uppercase font-tech text-slate-400" data-i18n="verifiedMerchantLabel">Verified Merchant</span>
+                <h4 id="custDisplayMerchant" class="text-sm sm:text-base font-bold text-konohaOrange font-tech tracking-wide">
+                  BALARAM LATHE MACHINE
+                </h4>
+              </div>
+              <span class="text-xs bg-emerald-950 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/40 font-tech">
+                Active UPI Gateway
+              </span>
+            </div>
+
+            <!-- Dynamic QR Image with Expired Overlay -->
+            <div class="relative bg-white p-4 rounded-2xl border-4 border-konohaOrange/80 shadow-chakra flex items-center justify-center min-w-[210px] min-h-[210px] overflow-hidden">
+              <img id="customerQrImg" src="" alt="UPI QR Code" class="w-48 h-48 object-contain">
+              
+              <!-- Session Expired Barrier Overlay -->
+              <div id="sessionExpiredOverlay" class="hidden absolute inset-0 bg-ninjaDark/95 backdrop-blur-md flex flex-col items-center justify-center p-4 text-center z-20">
+                <i class="fa-solid fa-hourglass-end text-3xl text-red-500 mb-2 animate-bounce"></i>
+                <span class="text-xs font-bold text-red-400 font-tech uppercase">10 मिनट का समय समाप्त!</span>
+                <p class="text-[11px] text-slate-300 mt-1 mb-3 font-tech leading-tight">सुरक्षा कारणों से QR कोड लॉक हो गया है।</p>
+                <button onclick="startTenMinutePaymentSession(true)" class="px-4 py-2 bg-gradient-to-r from-konohaOrange to-konohaFlame text-black font-bold uppercase text-xs rounded-xl font-tech shadow-rasengan hover:brightness-110 transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-rotate-right"></i>
+                  <span>नया QR कोड बनाएं (Regenerate)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Amount Input -->
+            <div class="w-full mt-6">
+              <label class="block text-xs font-tech text-slate-300 uppercase text-left mb-1.5" data-i18n="enterAmountLabel">
+                पेमेंट राशि चुनें या दर्ज करें (Amount in ₹) :
+              </label>
+              <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-konohaOrange font-bold">₹</span>
+                <input type="number" id="customerAmountInput" value="500" min="1" step="1" oninput="refreshCustomerQrCode()" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl pl-9 pr-24 py-2.5 text-sm text-white font-bold focus:outline-none focus:border-konohaOrange">
+                <button onclick="refreshCustomerQrCode()" class="absolute right-1.5 px-3 py-1.5 bg-konohaOrange text-black text-xs font-bold rounded-lg hover:bg-konohaFlame hover:text-white transition font-tech" data-i18n="btnUpdateQr">
+                  QR अपडेट
+                </button>
+              </div>
+
+              <!-- Quick Tokens -->
+              <div class="flex items-center justify-between gap-1.5 mt-2.5">
+                <button onclick="setQuickAmount(300)" class="flex-1 py-1 bg-ninjaSlate hover:bg-slate-700 text-slate-300 text-xs rounded-lg border border-ninjaBorder font-tech">₹300</button>
+                <button onclick="setQuickAmount(500)" class="flex-1 py-1 bg-ninjaSlate hover:bg-slate-700 text-slate-300 text-xs rounded-lg border border-ninjaBorder font-tech">₹500</button>
+                <button onclick="setQuickAmount(1000)" class="flex-1 py-1 bg-ninjaSlate hover:bg-slate-700 text-slate-300 text-xs rounded-lg border border-ninjaBorder font-tech">₹1000</button>
+                <button onclick="setQuickAmount(2000)" class="flex-1 py-1 bg-ninjaSlate hover:bg-slate-700 text-slate-300 text-xs rounded-lg border border-ninjaBorder font-tech">₹2000</button>
+              </div>
+            </div>
+
+            <!-- UPI ID & Copy Button -->
+            <div class="w-full mt-5 p-3 rounded-xl bg-ninjaSlate border border-ninjaBorder flex items-center justify-between">
+              <div class="text-left overflow-hidden">
+                <span class="text-[10px] text-slate-400 block font-tech" data-i18n="upiIdLabel">OFFICIAL WORKSHOP UPI ID</span>
+                <span id="custDisplayUpi" class="text-xs sm:text-sm font-bold text-white font-mono truncate block">balaramlathe@upi</span>
+              </div>
+              <button onclick="copyWorkshopUpiId()" class="ml-2 px-3 py-1.5 bg-konohaOrange/15 hover:bg-konohaOrange text-konohaOrange hover:text-black border border-konohaOrange/40 text-xs font-bold rounded-lg transition flex items-center gap-1 font-tech flex-shrink-0">
+                <i class="fa-regular fa-copy"></i>
+                <span id="copyPromptText" data-i18n="btnCopy">कॉपी करें</span>
+              </button>
+            </div>
+
+            <!-- Direct UPI App Intent Launch -->
+            <a id="customerUpiLaunchBtn" href="#" class="w-full mt-4 py-3 bg-gradient-to-r from-chakraCyan to-chakraBlue hover:from-sky-400 hover:to-blue-600 text-black font-bold rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2 shadow-chakra font-tech active:scale-98">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+              <span data-i18n="btnDirectAppPay">UPI ऐप से सीधे भुगतान करें (GPay/PhonePe/Paytm)</span>
+            </a>
+
+            <!-- Customer Protection Notice -->
+            <div class="mt-4 text-[11px] text-slate-500 font-tech flex items-center justify-center gap-1">
+              <i class="fa-solid fa-lock text-konohaOrange"></i>
+              <span data-i18n="customerPayPrivacy">सुरक्षा लॉक: QR व UPI आईडी केवल अधिकृत एडमिन द्वारा ही बदली जा सकती है।</span>
+            </div>
+          </div>
+
+          <!-- Right: 1-Click Instant Payment Confirmation (No Boring Forms!) -->
+          <div class="lg:col-span-6 bg-ninjaDark border border-ninjaBorder rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between relative overflow-hidden">
+            
+            <!-- Glow background -->
+            <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center">
+                  <i class="fa-solid fa-bolt-lightning text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-display uppercase tracking-wider text-white">
+                    1-क्लिक पेमेंट पुष्टि (Instant Ping)
+                  </h3>
+                  <span class="text-[10px] font-tech text-emerald-400 uppercase tracking-widest block">ZERO FORM • AUTOMATIC NOTIFICATION</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-300 mt-2 mb-5 leading-relaxed font-tech">
+                QR स्कैन करके पेमेंट पूरा होते ही बस नीचे <b class="text-emerald-400">"मैंने पेमेंट कर दिया"</b> बटन दबाएं। मालिक को तुरंत साउंड अलर्ट और व्हाट्सएप पर सूचना पहुंच जाएगी — किसी बड़े फॉर्म या UTR टाइप करने की जरूरत नहीं!
+              </p>
+
+              <!-- Optional Quick Customer Name (Auto-fills from ticket if already filled) -->
+              <div class="space-y-3 mb-5">
+                <div>
+                  <label class="block text-[11px] font-tech uppercase text-slate-400 mb-1">
+                    आपका नाम या मोबाइल नंबर <span class="text-slate-500">(वैकल्पिक / Optional)</span>
+                  </label>
+                  <input type="text" id="instantPayerIdentifier" placeholder="उदा. रवि / 9876543210 (पहचान हेतु)" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-400 font-tech">
+                </div>
+              </div>
+
+              <!-- BIG 1-CLICK INSTANT ACTION BUTTON -->
+              <button type="button" onclick="handleOneClickPaymentConfirm()" id="btnOneClickPay" class="w-full py-4 px-6 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:brightness-110 active:scale-95 text-white font-extrabold uppercase rounded-2xl transition duration-200 font-tech shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-3 text-sm sm:text-base border border-emerald-300/40">
+                <i class="fa-solid fa-circle-check text-xl animate-bounce"></i>
+                <span>मैंने पेमेंट कर दिया (1-Click Confirm)</span>
+              </button>
+
+              <!-- Live Verification State Card (Appears on click) -->
+              <div id="paymentVerifiedCard" class="hidden mt-4 p-4 rounded-2xl bg-emerald-950/70 border border-emerald-500 text-center animate-pulse">
+                <i class="fa-solid fa-shield-heart text-2xl text-emerald-400 mb-1"></i>
+                <h4 class="text-sm font-bold text-white font-tech">पेमेंट सूचना मालिक को भेज दी गई है!</h4>
+                <p class="text-[11px] text-emerald-300 font-tech mt-0.5">वर्कशॉप लेजर में आपका आर्डर दर्ज हो चुका है।</p>
+              </div>
+
+              <!-- Collapsible Optional UTR Input for customers who still want to log UTR -->
+              <div class="mt-5 pt-4 border-t border-ninjaBorder">
+                <button type="button" onclick="toggleOptionalUtrInput()" class="text-[11px] text-slate-400 hover:text-konohaOrange flex items-center gap-1 font-tech">
+                  <i class="fa-solid fa-chevron-down text-[10px]" id="utrToggleIcon"></i>
+                  <span>क्या आप 12-अंकों का UTR नंबर भी जोड़ना चाहते हैं? (वैकल्पिक)</span>
+                </button>
+                <div id="optionalUtrBox" class="hidden mt-2.5 space-y-2">
+                  <input type="text" id="manualOptionalUtr" placeholder="12 Digit Bank Ref / UTR No." class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-konohaOrange">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-ninjaBorder text-[11px] text-slate-400 flex items-start gap-2">
+              <i class="fa-solid fa-bell text-emerald-400 flex-shrink-0 mt-0.5 animate-bounce"></i>
+              <span>बटन दबाते ही वर्कशॉप ऑपरेटर को लाउड साउंड बीप और व्हाट्सएप रसीद तुरंत चली जाती है।</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER WITH STEALTH ADMIN TRIGGER ================= -->
+  <footer class="bg-ninjaDark border-t border-ninjaBorder py-4 mt-auto relative z-10">
+    <div class="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 font-tech">
+      <div class="flex items-center gap-2">
+        <span class="text-konohaOrange font-ninja text-sm tracking-wide">BALARAM LATHE MACHINE</span>
+        <span>• बाराद्वार (सक्ती), छत्तीसगढ़</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span>© 2026 Konoha Mechanical Works</span>
+        <!-- Stealth Lock: Double security entry -->
+        <button onclick="openSecretAdminAuth()" class="text-slate-600 hover:text-slate-400 transition" title="Security Seal">
+          <i class="fa-solid fa-lock text-[10px]"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT APPLICATION CORE ================= -->
+  <script>
+    /* 1. BILINGUAL DICTIONARY */
+    const I18N = {
+      hi: {
+        lockdownBadge: "🚨 मास्टर सील सक्रिय • इमरजेंसी लॉकडाउन",
+        lockdownTitle: "कार्यशाला अस्थायी रूप से बंद है",
+        lockdownDesc: "बलराम लेथ मशीन बाराद्वार की ऑनलाइन सेवाएं एडमिन द्वारा रोक दी गई हैं। यदि आपको जेसीबी, ट्रैक्टर या हेवी बुशिंग/वेल्डिंग का अति-आवश्यक काम कराना है तो नीचे दिए गए नंबर पर तुरंत संपर्क करें।",
+        emergencyCallBtn: "सीधा फोन लगाएं (Call Now)",
+        emergencyWaBtn: "व्हाट्सएप संपर्क",
+        adminUnsealBtn: "🔐 गुप्त अनसील (एडमिन लॉगिन)",
+        adminModalTitle: "गुप्त एडमिन प्रमाणीकरण",
+        adminModalSub: "वेबसाइट नियंत्रण, किल-स्विच और UPI सेटिंग्स खोलने के लिए अपना 16-अंकों का मास्टर पासकोड दर्ज करें।",
+        req16Notice: "लंबाई: ठीक 16 अंक",
+        btnSecretUnlock: "एडमिन कंट्रोल रूम खोलें",
+        killSwitchLabel: "MASTER KILL SWITCH",
+        killSwitchDetail: "एक क्लिक में पूरी वेबसाइट बंद करें। बंद होने पर ग्राहकों को केवल इमरजेंसी मेंटेनेंस स्क्रीन और संपर्क नंबर दिखेगा।",
+        upiSettingsHeading: "UPI व QR कोड सेटिंग्स (Admin Only)",
+        upiSettingsInfo: "यहां दिया गया UPI ID और नाम तुरंत कस्टमर वाले QR कोड में अपडेट हो जाएगा।",
+        lblShopName: "मर्चेंट / वर्कशॉप नाम",
+        lblUpiId: "दुकान की UPI ID (VPA)",
+        btnSaveUpi: "UPI सेटिंग्स सेव करें",
+        passcodeHeading: "16-अंकों का मास्टर पासकोड बदलें",
+        passcodeInfo: "पासकोड हमेशा 16 अंकों का रखें ताकि कोई दूसरा इसे खोल न सके।",
+        lblNewKey: "नया 16-अंक पासकोड *",
+        lblRepeatKey: "दोबारा दर्ज करें *",
+        btnSavePasscode: "नया पासकोड सुरक्षित करें",
+        tabServices: "🛠️ 1. सेवाएं (Jutsu Services)",
+        tabDispatch: "⚡ 2. समस्या बताएं (Dispatch Hub)",
+        tabPayment: "💳 3. चक्रा पेमेंट (UPI QR Pay)",
+        heroBadge: "FIRE STYLE: HEAVY MECHANICAL PRECISION",
+        heroSub: "जेसीबी (Backhoe Loader) बुशिंग, हेवी लेथ टर्निंग, आर्क/मिग वेल्डिंग, रेडियल ड्रिलिंग और फैब्रिकेशन का अभेद्य व विश्वसनीय समाधान।",
+        orderService: "यह काम चुनें (Select Job)",
+        srv1Title: "JCB & Earth Movers Bushing",
+        srv1Desc: "JCB 3DX/4DX बूम पिन, डिपर, बकेट पिन, किंगपिन रीबिल्डिंग और भारी हाइड्रोलिक रॉड प्ले को शून्य टॉलरेंस के साथ फिट करना।",
+        srv1F1: "बूम, डिपर व किंगपिन बुश रिप्लेसमेंट",
+        srv1F2: "हार्ड एंड टेम्पर हाई-ग्रेड स्टील पिन निर्माण",
+        srv1F3: "लाइन बोरिंग व सटीक माइक्रोमीटर रीमिंग",
+        srv2Title: "Heavy Lathe Turning",
+        srv2Desc: "लंबे व भारी शाफ्ट टर्निंग, थ्रेडिंग (आंतरिक/बाहरी), रोलर री-फेसिंग, कपलिंग बोरिंग और की-वे ग्रूव कटिंग।",
+        srv2F1: "शाफ्ट सीधा करना (Shaft Truing)",
+        srv2F2: "मेट्रिक, बीएसडब्ल्यू, एसीएमई थ्रेड कटिंग",
+        srv2F3: "क्रशर और राइस मिल रोलर मेंटेनेंस",
+        srv3Title: "ARC & MIG Crack Welding",
+        srv3Desc: "टूटे हुए चेसिस, ट्रैक्टर ट्रॉली एक्सल, जेसीबी बकेट क्रैक और भारी कास्ट आयरन की मजबूत वेल्डिंग।",
+        srv3F1: "डीप पेनिट्रेशन 7018 लो-हाइड्रोजन इलेक्ट्रोड",
+        srv3F2: "कास्ट आयरन और अलॉय वेल्डिंग समाधान",
+        srv3F3: "गसेट प्लेट्स और चेसिस सुदृढ़ीकरण",
+        srv4Title: "Radial Drilling & Tapping",
+        srv4Desc: "मोटी मेटल प्लेट्स, गर्डर, ऑटोमोबाइल हब और फ्लैंज में सटीक बोर ड्रिलिंग, काउंटर सिंकिंग और थ्रेड टैपिंग।",
+        srv4F1: "50mm तक का सॉलिड ड्रिलिंग बोर",
+        srv4F2: "फ्लैंज PCD मार्किंग और परिशुद्ध बोर",
+        srv4F3: "टूटे बोल्ट/स्टड निकालना व री-थ्रेडिंग",
+        srv5Title: "Heavy Metal Fabrication",
+        srv5Desc: "ट्रैक्टर कल्टीवेटर, प्लाउ, ट्रॉली हुक, क्रशर प्लांट हॉपर, गेट्स एवं इंडस्ट्रियल हैवी एमएस फ्रेम निर्माण।",
+        srv5F1: "मजबूत एग्रीकल्चरल उपकरण फैब्रिकेशन",
+        srv5F2: "इंडस्ट्रियल शेड ब्रैकेट्स व स्ट्रक्चर",
+        srv5F3: "कस्टम स्टील मॉडिफिकेशन",
+        srv6Title: "Hydraulic Jack Rod Turning",
+        srv6Desc: "हाइड्रोलिक जैक रॉड स्क्रैच रिपेयर, ग्लैंड नट थ्रेडिंग, पिस्टन सील ग्रूव कटिंग और लीकेज-प्रूफ लेथ फिनिशिंग।",
+        srv6F1: "हार्ड क्रोम रॉड री-पॉलिशिंग",
+        srv6F2: "पिस्टन सील ग्रूव एक्यूरेट कटिंग",
+        srv6F3: "हाइड्रोलिक एंड-आई बोर रिपेयर",
+        dispatchBadge: "3-WAY SHINOBI COMM CHANNEL",
+        dispatchHeading: "समस्या बताने के 3 सीधे माध्यम",
+        dispatchSub: "इमरजेंसी कॉल लगाएं, फोटो सहित व्हाट्सएप भेजें या सीधे वेबसाइट पर टिकट बनाकर रजिस्टर करें।",
+        callChannelTitle: "1. सीधा फोन कॉल",
+        callChannelAction: "तुरंत बात करें →",
+        waChannelTitle: "2. व्हाट्सएप विवरण",
+        waChannelAction: "फोटो/विवरण भेजें →",
+        webChannelTitle: "3. डायरेक्ट वेब टिकट",
+        webChannelSub: "Online Workshop Queue",
+        webChannelAction: "नीचे फॉर्म भरें ↓",
+        formTitle: "मशीन समस्या विवरण पत्र (Mechanical Ticket)",
+        formSub: "यह सीधे वर्कशॉप एडमिन के डेटाबेस में सुरक्षित हो जाएगा।",
+        labelName: "आपका नाम (Customer Name) *",
+        labelPhone: "मोबाइल नंबर (Phone Number) *",
+        labelMachine: "मशीन का प्रकार (Equipment Type) *",
+        labelCategory: "कार्य श्रेणी (Job Category) *",
+        labelUrgency: "प्राथमिकता (Urgency Level)",
+        labelLocation: "गाड़ी/मशीन की लोकेशन (Site Location)",
+        labelDesc: "समस्या का विवरण (Problem Details) *",
+        btnSubmitTicket: "वेबसाइट पर टिकट दर्ज करें (Submit)",
+        btnSendWa: "व्हाट्सएप पर फॉरवर्ड करें",
+        paySecurityBadge: "100% VERIFIED WORKSHOP UPI PORTAL",
+        payHeading: "चक्रा पेमेंट गेटवे (Chakra Pay)",
+        paySub: "वर्कशॉप के आधिकारिक मर्चेंट QR को स्कैन करके Google Pay, PhonePe या Paytm से सुरक्षित टोकन या सर्विस पेमेंट करें।",
+        verifiedMerchantLabel: "Verified Merchant",
+        enterAmountLabel: "पेमेंट राशि चुनें या दर्ज करें (Amount in ₹) :",
+        btnUpdateQr: "QR अपडेट",
+        upiIdLabel: "OFFICIAL WORKSHOP UPI ID",
+        btnCopy: "कॉपी करें",
+        btnDirectAppPay: "UPI ऐप से सीधे भुगतान करें (GPay/PhonePe/Paytm)",
+        customerPayPrivacy: "सुरक्षा लॉक: QR व UPI आईडी केवल अधिकृत एडमिन द्वारा ही बदली जा सकती है।",
+        utrFormHeading: "पेमेंट के बाद UTR रसीद दर्ज करें",
+        utrFormSub: "यदि आपने QR स्कैन कर पेमेंट पूरा कर लिया है, तो बैंक से मिला 12-अंकों का UTR नंबर यहां भरें ताकि वर्कशॉप लेजर में आपका काम प्राथमिकता से शुरू किया जा सके।",
+        utrName: "पेयर का नाम (Payer Name) *",
+        utrPhone: "मोबाइल नंबर (Mobile Number) *",
+        utrAmount: "चुकाई गई राशि (Amount) *",
+        utrApp: "पेमेंट ऐप (App)",
+        utrNumLabel: "12 Digit UPI Ref / UTR No. *",
+        btnSubmitReceipt: "UTR रसीद सबमिट करें",
+        utrInfoNotice: "रसीद सबमिट होते ही वर्कशॉप ऑपरेटर को इंस्टेंट साउंड और अलर्ट नोटिफिकेशन प्राप्त होगा।"
+      },
+      en: {
+        lockdownBadge: "🚨 KONOHA DEFENSE BARRIER ACTIVATED • LOCKDOWN",
+        lockdownTitle: "Workshop Temporarily Closed",
+        lockdownDesc: "Online operations for Balaram Lathe Machine Baradwar have been temporarily paused by administrator. For emergency JCB, tractor, or lathe breakdown repair, contact the owner directly.",
+        emergencyCallBtn: "Direct Emergency Call",
+        emergencyWaBtn: "WhatsApp Contact",
+        adminUnsealBtn: "🔐 Secret Unseal (Admin Login)",
+        adminModalTitle: "Secret Admin Authentication",
+        adminModalSub: "Enter your 16-digit master passcode to access the kill-switch, UPI settings, and order records.",
+        req16Notice: "Requirement: Exactly 16 digits",
+        btnSecretUnlock: "Open Control Room",
+        killSwitchLabel: "MASTER KILL SWITCH",
+        killSwitchDetail: "Instantly shut down the website. When turned off, customers only see the emergency maintenance screen and contact buttons.",
+        upiSettingsHeading: "UPI & QR Code Settings (Admin Only)",
+        upiSettingsInfo: "The UPI ID and name configured here immediately update the customer QR code.",
+        lblShopName: "Merchant / Workshop Name",
+        lblUpiId: "Workshop UPI ID (VPA)",
+        btnSaveUpi: "Save UPI Settings",
+        passcodeHeading: "Change 16-Digit Master Passcode",
+        passcodeInfo: "Always maintain a 16-digit passcode for maximum security.",
+        lblNewKey: "New 16-Digit Passcode *",
+        lblRepeatKey: "Repeat Passcode *",
+        btnSavePasscode: "Save New Passcode",
+        tabServices: "🛠️ 1. Services (Jutsu Catalog)",
+        tabDispatch: "⚡ 2. Breakdown Dispatch Hub",
+        tabPayment: "💳 3. Chakra Pay (UPI QR)",
+        heroBadge: "FIRE STYLE: HEAVY MECHANICAL PRECISION",
+        heroSub: "The premier workshop in Baradwar for JCB & Backhoe Loader bushing, heavy lathe turning, precision drilling, ARC/MIG welding, and durable metal fabrication.",
+        orderService: "Select This Job",
+        srv1Title: "JCB & Earth Movers Bushing",
+        srv1Desc: "JCB 3DX/4DX boom pins, dipper, bucket pin, kingpin rebuilds, and zero-tolerance bushing boring.",
+        srv1F1: "Boom, dipper & kingpin bushing overhaul",
+        srv1F2: "Hardened & tempered steel pin manufacturing",
+        srv1F3: "Line boring & micrometer precision reaming",
+        srv2Title: "Heavy Lathe Turning",
+        srv2Desc: "Long and heavy shaft turning, internal/external threading, roller re-facing, keyway slotting.",
+        srv2F1: "Shaft truing and dynamic balancing",
+        srv2F2: "Metric, BSW, ACME thread cutting",
+        srv2F3: "Crusher & rice mill roller maintenance",
+        srv3Title: "ARC & MIG Crack Welding",
+        srv3Desc: "High penetration welding for broken chassis, tractor trolley axles, JCB bucket cracks & cast iron.",
+        srv3F1: "Deep penetration 7018 low-hydrogen rods",
+        srv3F2: "Cast iron & alloy structural welding",
+        srv3F3: "Gusset plates & chassis reinforcement",
+        srv4Title: "Radial Drilling & Tapping",
+        srv4Desc: "Accurate boring, countersinking, and thread tapping for thick metal plates, flanges, and hubs.",
+        srv4F1: "Solid drilling bore up to 50mm+",
+        srv4F2: "Flange PCD marking and precision boring",
+        srv4F3: "Broken stud extraction and re-threading",
+        srv5Title: "Heavy Metal Fabrication",
+        srv5Desc: "Custom fabrication for agricultural cultivators, plows, trolley hooks, crusher hoppers & frames.",
+        srv5F1: "Heavy-duty farm equipment fabrication",
+        srv5F2: "Industrial shed brackets & structural jobs",
+        srv5F3: "Custom mild-steel modifications",
+        srv6Title: "Hydraulic Jack Rod Turning",
+        srv6Desc: "Hydraulic cylinder rod scratch repair, gland nut threading, piston seal groove machining.",
+        srv6F1: "Hard chrome rod polishing & trueing",
+        srv6F2: "Piston seal groove accurate cutting",
+        srv6F3: "Hydraulic end-eye bore repair",
+        dispatchBadge: "3-WAY SHINOBI COMM CHANNEL",
+        dispatchHeading: "3 Ways to Report Breakdown",
+        dispatchSub: "Call directly, send photos and specs via WhatsApp, or submit an official online web ticket.",
+        callChannelTitle: "1. Direct Phone Call",
+        callChannelAction: "Dial Instantly →",
+        waChannelTitle: "2. WhatsApp Specs",
+        waChannelAction: "Send Photos & Chat →",
+        webChannelTitle: "3. Direct Web Ticket",
+        webChannelSub: "Online Workshop Queue",
+        webChannelAction: "Fill Form Below ↓",
+        formTitle: "Breakdown Mechanical Ticket",
+        formSub: "Saved immediately into the workshop database for fast response.",
+        labelName: "Your Name (Customer Name) *",
+        labelPhone: "Phone Number (10 Digits) *",
+        labelMachine: "Equipment / Machine Type *",
+        labelCategory: "Work Category *",
+        labelUrgency: "Urgency Level",
+        labelLocation: "Equipment Location",
+        labelDesc: "Problem Details *",
+        btnSubmitTicket: "Submit Web Ticket",
+        btnSendWa: "Forward to WhatsApp",
+        paySecurityBadge: "100% VERIFIED WORKSHOP UPI PORTAL",
+        payHeading: "Chakra Pay Gateway",
+        paySub: "Scan the official workshop merchant QR to pay advance or service charges via Google Pay, PhonePe, or Paytm.",
+        verifiedMerchantLabel: "Verified Merchant",
+        enterAmountLabel: "Enter or Select Amount (₹) :",
+        btnUpdateQr: "Update QR",
+        upiIdLabel: "OFFICIAL WORKSHOP UPI ID",
+        btnCopy: "Copy ID",
+        btnDirectAppPay: "Pay via UPI App (GPay/PhonePe/Paytm)",
+        customerPayPrivacy: "Security Lock: QR & UPI VPA can only be edited by authenticated Administrator.",
+        utrFormHeading: "Submit Payment UTR Receipt",
+        utrFormSub: "Once you transfer via QR, enter the 12-digit UTR/Reference number below to expedite your workshop order.",
+        utrName: "Payer Name *",
+        utrPhone: "Mobile Number *",
+        utrAmount: "Amount Paid *",
+        utrApp: "Payment App",
+        utrNumLabel: "12-Digit UPI Ref / UTR No. *",
+        btnSubmitReceipt: "Submit UTR Receipt",
+        utrInfoNotice: "Upon receipt submission, the workshop operator will receive an instant audio alert and notification."
+      }
+    };
+
+    let currentLanguage = 'hi';
+
+    function toggleLanguage() {
+      currentLanguage = (currentLanguage === 'hi') ? 'en' : 'hi';
+      applyLanguageDict();
+    }
+
+    function applyLanguageDict() {
+      const texts = I18N[currentLanguage];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key]) el.textContent = texts[key];
+      });
+      document.getElementById('langDisplayBadge').textContent = (currentLanguage === 'hi') ? 'EN / हिंदी' : 'हिंदी / EN';
+    }
+
+    /* 2. PERSISTENT STORAGE MANAGEMENT */
+    const INITIAL_CONFIG = {
+      isWebsiteLive: true,
+      adminPasscode: '9876543210123456',
+      merchantName: 'BALARAM LATHE MACHINE',
+      upiId: 'balaramlathe@upi',
+      phone: '9876543210',
+      whatsapp: '9876543210',
+      tickets: [
+        {
+          id: 'TKT-108',
+          name: 'दिलीप पटेल',
+          phone: '9876543210',
+          machine: 'JCB 3DX / Backhoe Loader',
+          category: 'Kingpin & Dipper Bushing',
+          urgency: 'Urgent',
+          location: 'बाराद्वार सक्ती रोड',
+          desc: 'डिपर पिन में काफी प्ले है, काम रुक गया है। नया पिन टर्निंग करके तुरंत फिट करना है।',
+          media: null,
+          time: '11:15 AM'
+        }
+      ],
+      utrLogs: [
+        {
+          id: 'UTR-502',
+          name: 'राजेश वर्मा',
+          phone: '9123456780',
+          amount: '500',
+          app: 'PhonePe',
+          utr: '419203948192',
+          time: '01:40 PM'
+        }
+      ]
+    };
+
+    let appData = {};
+    let selectedTicketMediaData = null;
+
+    function loadAppData() {
+      try {
+        const stored = localStorage.getItem('balaram_shinobi_v3');
+        if (stored) {
+          appData = JSON.parse(stored);
+          if (!appData.adminPasscode || appData.adminPasscode.length !== 16) {
+            appData.adminPasscode = '9876543210123456';
+          }
+        } else {
+          appData = { ...INITIAL_CONFIG };
+        }
+      } catch (err) {
+        console.error(err);
+        appData = { ...INITIAL_CONFIG };
+      }
+      saveAppData();
+    }
+
+    function saveAppData() {
+      localStorage.setItem('balaram_shinobi_v3', JSON.stringify(appData));
+    }
+
+    /* 3. AUDIO SYNTHESIZER FOR PAYMENT CHIME */
+    function playChakraPaymentChime() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+        osc1.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.25); // A5
+
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(440, ctx.currentTime); // A4
+        osc2.frequency.exponentialRampToValueAtTime(1174.66, ctx.currentTime + 0.35); // D6
+
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
+
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc1.start();
+        osc2.start();
+        osc1.stop(ctx.currentTime + 0.7);
+        osc2.stop(ctx.currentTime + 0.7);
+      } catch (e) {
+        console.log("Audio not allowed or supported:", e);
+      }
+    }
+
+    /* 4. NOTIFICATION TOASTS & BANNERS */
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let border = 'border-konohaOrange text-konohaOrange';
+      if (type === 'success') border = 'border-emerald-400 text-emerald-400';
+      if (type === 'error') border = 'border-red-500 text-red-400';
+
+      toast.className = `pointer-events-auto bg-ninjaSlate/95 border-2 ${border} px-4 py-3 rounded-2xl shadow-rasengan text-xs sm:text-sm font-tech font-bold flex items-center gap-2.5 transition-all transform duration-300 translate-y-3 opacity-0 backdrop-blur-md`;
+      toast.innerHTML = `
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-current animate-ping"></span>
+        <span class="flex-1">${msg}</span>
+      `;
+
+      container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.remove('translate-y-3', 'opacity-0'));
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-3');
+        setTimeout(() => toast.remove(), 350);
+      }, 3500);
+    }
+
+    function triggerInstantPaymentAlert(payer, amount, utr) {
+      playChakraPaymentChime();
+
+      if ("Notification" in window) {
+        if (Notification.permission === "granted") {
+          new Notification("🔔 नया पेमेंट प्राप्त: ₹" + amount, {
+            body: `${payer} ने ₹${amount} भेजे हैं (UTR: ${utr})`,
+            icon: "https://api.iconify.design/lucide/wallet.svg"
+          });
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission();
+        }
+      }
+
+      const banner = document.getElementById('instantPayBanner');
+      const txt = document.getElementById('instantPayText');
+      if (banner && txt) {
+        txt.textContent = `${payer} द्वारा ₹${amount} का पेमेंट सबमिट हुआ! (UTR: ${utr})`;
+        banner.classList.remove('hidden');
+      }
+    }
+
+    function dismissInstantPayBanner() {
+      const banner = document.getElementById('instantPayBanner');
+      if (banner) banner.classList.add('hidden');
+    }
+
+    /* 5. TAB CONTROLLER */
+    function switchCustomerTab(targetTab) {
+      const tabs = ['services', 'dispatch', 'payment'];
+      tabs.forEach(tab => {
+        const content = document.getElementById(`tabContent-${tab}`);
+        const btn = document.getElementById(`tabBtn-${tab}`);
+        if (tab === targetTab) {
+          content.classList.remove('hidden');
+          btn.className = "tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-tech font-bold uppercase tracking-wider transition text-konohaOrange bg-konohaOrange/10 border border-konohaOrange/50 shadow-seal";
+        } else {
+          content.classList.add('hidden');
+          btn.className = "tab-button flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-tech font-bold uppercase tracking-wider transition text-slate-400 hover:text-white hover:bg-ninjaCard border border-transparent";
+        }
+      });
+
+      if (targetTab === 'payment') {
+        if (!currentGatewayTxnId || gatewaySecondsRemaining <= 0) {
+          startTenMinutePaymentSession();
+        } else {
+          refreshCustomerQrCode();
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 6. STEALTH ADMIN AUTHENTICATION */
+    function triggerSecretAdminByLogo() {
+      showToast('गुप्त एडमिन गेट सक्रिय...', 'info');
+      openSecretAdminAuth();
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        openSecretAdminAuth();
+      }
+    });
+
+    function openSecretAdminAuth() {
+      const modal = document.getElementById('secretAdminAuthModal');
+      const input = document.getElementById('adminModalKeyInput');
+      modal.classList.remove('hidden');
+      input.value = '';
+      input.focus();
+      onSecretAdminKeyInput('');
+    }
+
+    function closeSecretAdminAuth() {
+      document.getElementById('secretAdminAuthModal').classList.add('hidden');
+    }
+
+    function onSecretAdminKeyInput(val) {
+      const counter = document.getElementById('secretKeyLengthCounter');
+      if (counter) {
+        counter.textContent = `${val.length} / 16`;
+        counter.className = (val.length === 16) ? 'text-emerald-400 font-bold' : 'text-konohaOrange font-bold';
+      }
+    }
+
+    function toggleInputVisibility(inpId, iconId) {
+      const inp = document.getElementById(inpId);
+      const icon = document.getElementById(iconId);
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        inp.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    }
+
+    function verifySecretAdminKey(e) {
+      e.preventDefault();
+      const entered = document.getElementById('adminModalKeyInput').value.trim();
+      const actual = appData.adminPasscode || '9876543210123456';
+
+      if (entered.length !== 16) {
+        showToast('त्रुटि: पासकोड ठीक 16 अंक का होना चाहिए!', 'error');
+        return;
+      }
+
+      if (entered === actual) {
+        closeSecretAdminAuth();
+        openAdminControlRoom();
+        showToast('प्रमाणीकरण सफल! एडमिन कंट्रोल रूम सक्रिय।', 'success');
+      } else {
+        showToast('अमान्य पासकोड! प्रवेश अस्वीकृत।', 'error');
+      }
+    }
+
+    function openAdminControlRoom() {
+      document.getElementById('adminControlRoomModal').classList.remove('hidden');
+      syncAdminControlUI();
+    }
+
+    function closeAdminControlRoom() {
+      document.getElementById('adminControlRoomModal').classList.add('hidden');
+    }
+
+    /* 7. EMERGENCY KILL SWITCH */
+    function applyKillSwitchState() {
+      const maint = document.getElementById('maintenanceScreen');
+      const toggle = document.getElementById('adminMasterKillToggle');
+      const statusText = document.getElementById('adminKillStatusText');
+      const box = document.getElementById('adminKillSwitchBox');
+
+      if (appData.isWebsiteLive) {
+        maint.classList.add('hidden');
+        if (toggle) toggle.checked = true;
+        if (statusText) {
+          statusText.textContent = (currentLanguage === 'hi') ? "वेबसाइट चालू है (Website is LIVE)" : "Website is LIVE (Online)";
+          statusText.className = "text-xl sm:text-2xl font-black font-ninja uppercase text-emerald-400 mt-1";
+        }
+        if (box) box.className = "bg-ninjaSlate border-2 border-emerald-500/50 rounded-2xl p-5 sm:p-6 mb-6 shadow-lg";
+      } else {
+        maint.classList.remove('hidden');
+        if (toggle) toggle.checked = false;
+        if (statusText) {
+          statusText.textContent = (currentLanguage === 'hi') ? "वेबसाइट बंद है (LOCKED DOWN)" : "Website is LOCKED DOWN";
+          statusText.className = "text-xl sm:text-2xl font-black font-ninja uppercase text-red-500 mt-1";
+        }
+        if (box) box.className = "bg-ninjaSlate border-2 border-red-500/60 rounded-2xl p-5 sm:p-6 mb-6 shadow-lg";
+      }
+    }
+
+    function handleAdminKillToggle() {
+      const toggle = document.getElementById('adminMasterKillToggle');
+      appData.isWebsiteLive = toggle.checked;
+      saveAppData();
+      applyKillSwitchState();
+
+      if (appData.isWebsiteLive) {
+        showToast('वेबसाइट पुनः लाइव चालू कर दी गई है!', 'success');
+      } else {
+        showToast('इमरजेंसी लॉकडाउन सक्रिय: पूरी वेबसाइट बंद!', 'error');
+      }
+    }
+
+    /* 8. 10-MINUTE RAILWAY STYLE SECURE GATEWAY & QR ENGINE */
+    let gatewayTimerInterval = null;
+    let gatewaySecondsRemaining = 600; // 10 minutes = 600 seconds
+    let currentGatewayTxnId = '';
+
+    function generateSecureTxnId() {
+      const randomNum = Math.floor(100000 + Math.random() * 900000);
+      const dateStr = new Date().toISOString().slice(2, 10).replace(/-/g, '');
+      return `BLM-${dateStr}-${randomNum}`;
+    }
+
+    function startTenMinutePaymentSession(isManualReset = false) {
+      if (gatewayTimerInterval) clearInterval(gatewayTimerInterval);
+      gatewaySecondsRemaining = 600;
+      currentGatewayTxnId = generateSecureTxnId();
+
+      const txnElem = document.getElementById('gatewaySessionTxnId');
+      if (txnElem) txnElem.textContent = currentGatewayTxnId;
+
+      const overlay = document.getElementById('sessionExpiredOverlay');
+      if (overlay) overlay.classList.add('hidden');
+
+      updateTimerDisplay();
+
+      gatewayTimerInterval = setInterval(() => {
+        gatewaySecondsRemaining--;
+        updateTimerDisplay();
+
+        if (gatewaySecondsRemaining <= 0) {
+          clearInterval(gatewayTimerInterval);
+          onPaymentSessionExpired();
+        }
+      }, 1000);
+
+      refreshCustomerQrCode();
+      if (isManualReset) {
+        showToast('नया 10-मिनट का सुरक्षित पेमेंट सत्र शुरू किया गया!', 'success');
+      }
+    }
+
+    function updateTimerDisplay() {
+      const timerElem = document.getElementById('gatewayCountdownTimer');
+      if (!timerElem) return;
+
+      const minutes = Math.floor(gatewaySecondsRemaining / 60);
+      const seconds = gatewaySecondsRemaining % 60;
+      const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      timerElem.textContent = formatted;
+
+      if (gatewaySecondsRemaining <= 120) {
+        timerElem.className = 'font-mono text-base font-black text-red-500 tracking-wider animate-pulse';
+      } else {
+        timerElem.className = 'font-mono text-base font-black text-konohaOrange tracking-wider';
+      }
+    }
+
+    function onPaymentSessionExpired() {
+      const overlay = document.getElementById('sessionExpiredOverlay');
+      if (overlay) overlay.classList.remove('hidden');
+      showToast('10 मिनट का समय समाप्त! सुरक्षा हेतु नया QR जनरेट करें।', 'error');
+    }
+
+    function refreshCustomerQrCode() {
+      if (gatewaySecondsRemaining <= 0) return;
+
+      const amtInput = document.getElementById('customerAmountInput');
+      const amount = amtInput ? amtInput.value : 500;
+
+      const upiId = appData.upiId || 'balaramlathe@upi';
+      const merchant = appData.merchantName || 'BALARAM LATHE MACHINE';
+      const note = `BLM ${currentGatewayTxnId || 'Order'}`;
+
+      const upiUri = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(merchant)}&am=${encodeURIComponent(amount)}&cu=INR&tn=${encodeURIComponent(note)}`;
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=10&data=${encodeURIComponent(upiUri)}`;
+      
+      const img = document.getElementById('customerQrImg');
+      if (img) img.src = qrApiUrl;
+
+      const launch = document.getElementById('customerUpiLaunchBtn');
+      if (launch) launch.href = upiUri;
+
+      document.getElementById('custDisplayMerchant').textContent = merchant;
+      document.getElementById('custDisplayUpi').textContent = upiId;
+    }
+
+    function setQuickAmount(amt) {
+      const amtInput = document.getElementById('customerAmountInput');
+      if (amtInput) {
+        amtInput.value = amt;
+        refreshCustomerQrCode();
+        showToast(`QR ₹${amt} के लिए सेट हुआ`, 'info');
+      }
+    }
+
+    function copyWorkshopUpiId() {
+      const upi = appData.upiId || 'balaramlathe@upi';
+      const temp = document.createElement('textarea');
+      temp.value = upi;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+
+      const prompt = document.getElementById('copyPromptText');
+      if (prompt) {
+        prompt.textContent = 'Copied!';
+        setTimeout(() => {
+          prompt.textContent = (currentLanguage === 'hi') ? 'कॉपी करें' : 'Copy ID';
+        }, 2000);
+      }
+      showToast('UPI ID Copied: ' + upi, 'success');
+    }
+
+    /* 9. MEDIA HANDLING (IMAGE / VIDEO ATTACHMENT) */
+    function handleMediaSelection(e) {
+      const file = e.target.files[0];
+      const previewWrap = document.getElementById('mediaPreviewWrap');
+      const previewContainer = document.getElementById('mediaPreviewContainer');
+
+      if (!file) {
+        selectedTicketMediaData = null;
+        previewWrap.classList.add('hidden');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const fileData = event.target.result;
+        selectedTicketMediaData = {
+          type: file.type.startsWith('video') ? 'video' : 'image',
+          data: fileData,
+          name: file.name
+        };
+
+        previewWrap.classList.remove('hidden');
+        if (selectedTicketMediaData.type === 'video') {
+          previewContainer.innerHTML = `<video src="${fileData}" controls class="w-full max-h-48 object-cover"></video>`;
+        } else {
+          previewContainer.innerHTML = `<img src="${fileData}" class="w-full max-h-48 object-cover" alt="Media Preview">`;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* 10. BREAKDOWN TICKET & WHATSAPP REDIRECTION */
+    function bookDirectJob(title) {
+      switchCustomerTab('dispatch');
+      const inp = document.getElementById('custJobInput');
+      if (inp) inp.value = title;
+      showToast(`चुना गया कार्य: ${title}`, 'info');
+    }
+
+    function handleWhatsAppCardClick() {
+      const name = document.getElementById('custNameInput').value.trim();
+      const phone = document.getElementById('custPhoneInput').value.trim();
+      const desc = document.getElementById('custDescInput').value.trim();
+
+      if (!name || !phone || !desc) {
+        showToast('कृपया पहले नीचे मशीन खराबी का विवरण भरें, फिर व्हाट्सएप पर भेजें!', 'error');
+        const formCard = document.getElementById('ticketFormCard');
+        formCard.scrollIntoView({ behavior: 'smooth' });
+        formCard.classList.add('ring-2', 'ring-emerald-400');
+        setTimeout(() => formCard.classList.remove('ring-2', 'ring-emerald-400'), 2500);
+        document.getElementById('custNameInput').focus();
+        return;
+      }
+
+      forwardTicketToWhatsAppWithValidation();
+    }
+
+    function forwardTicketToWhatsAppWithValidation() {
+      const name = document.getElementById('custNameInput').value.trim();
+      const phone = document.getElementById('custPhoneInput').value.trim();
+      const machine = document.getElementById('custMachineInput').value;
+      const category = document.getElementById('custJobInput').value.trim();
+      const urgency = document.getElementById('custUrgencyInput').value;
+      const location = document.getElementById('custLocInput').value.trim() || 'Baradwar';
+      const desc = document.getElementById('custDescInput').value.trim();
+
+      if (!name || !phone || !category || !desc) {
+        showToast('कृपया नाम, मोबाइल, कार्य और विवरण पूरा भरें!', 'error');
+        document.getElementById('custNameInput').focus();
+        return;
+      }
+
+      const waPhone = (appData.whatsapp || '9876543210').replace(/[^0-9]/g, '');
+      const fullWaNumber = waPhone.length === 10 ? '91' + waPhone : waPhone;
+
+      const message = 
+`*🔧 BALARAM LATHE MACHINE BARADWAR (BREAKDOWN)*
+---------------------------------------------
+*👤 ग्राहक नाम:* ${name}
+*📞 फोन नंबर:* ${phone}
+*🚜 मशीन मॉडल:* ${machine}
+*🛠️ कार्य श्रेणी:* ${category}
+*🚨 प्राथमिकता:* ${urgency}
+*📍 साइट लोकेशन:* ${location}
+*📝 समस्या का विवरण:* ${desc}
+---------------------------------------------
+कृपया रेट, बुश उपलब्धता व समय बताएं।`;
+
+      window.open(`https://wa.me/${fullWaNumber}?text=${encodeURIComponent(message)}`, '_blank');
+      showToast('WhatsApp पर मशीन विवरण फॉरवर्ड किया जा रहा है...', 'info');
+    }
+
+    function handleProblemTicketSubmit(e) {
+      e.preventDefault();
+      const ticket = {
+        id: 'TKT-' + Math.floor(100 + Math.random() * 900),
+        name: document.getElementById('custNameInput').value.trim(),
+        phone: document.getElementById('custPhoneInput').value.trim(),
+        machine: document.getElementById('custMachineInput').value,
+        category: document.getElementById('custJobInput').value.trim(),
+        urgency: document.getElementById('custUrgencyInput').value,
+        location: document.getElementById('custLocInput').value.trim() || 'Baradwar',
+        desc: document.getElementById('custDescInput').value.trim(),
+        media: selectedTicketMediaData,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      if (!appData.tickets) appData.tickets = [];
+      appData.tickets.unshift(ticket);
+      saveAppData();
+
+      showToast(`धन्यवाद ${ticket.name}! टिकट #${ticket.id} दर्ज हुआ।`, 'success');
+      document.getElementById('problemTicketForm').reset();
+      selectedTicketMediaData = null;
+      document.getElementById('mediaPreviewWrap').classList.add('hidden');
+    }
+
+    function toggleOptionalUtrInput() {
+      const box = document.getElementById('optionalUtrBox');
+      const icon = document.getElementById('utrToggleIcon');
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        if (icon) icon.className = 'fa-solid fa-chevron-up text-[10px]';
+      } else {
+        box.classList.add('hidden');
+        if (icon) icon.className = 'fa-solid fa-chevron-down text-[10px]';
+      }
+    }
+
+    function handleOneClickPaymentConfirm() {
+      const amtInput = document.getElementById('customerAmountInput');
+      const amount = amtInput ? amtInput.value : 500;
+      
+      // Auto-detect name or phone from identifier input or previous ticket form
+      let payerInfo = document.getElementById('instantPayerIdentifier').value.trim();
+      if (!payerInfo) {
+        const ticketName = document.getElementById('custNameInput') ? document.getElementById('custNameInput').value.trim() : '';
+        const ticketPhone = document.getElementById('custPhoneInput') ? document.getElementById('custPhoneInput').value.trim() : '';
+        if (ticketName || ticketPhone) {
+          payerInfo = `${ticketName} ${ticketPhone ? '('+ticketPhone+')' : ''}`.trim();
+        } else {
+          payerInfo = 'ग्राहक (Customer)';
+        }
+      }
+
+      const manualUtr = document.getElementById('manualOptionalUtr') ? document.getElementById('manualOptionalUtr').value.trim() : '';
+      const finalUtr = manualUtr || '1-CLICK-VERIFY';
+      const sessionTxn = currentGatewayTxnId || 'BLM-DIRECT';
+
+      const paymentRecord = {
+        id: 'PAY-' + Math.floor(100 + Math.random() * 900),
+        txnId: sessionTxn,
+        name: payerInfo,
+        phone: '1-Click Direct',
+        amount: amount,
+        app: 'UPI App / QR',
+        utr: finalUtr,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      if (!appData.utrLogs) appData.utrLogs = [];
+      appData.utrLogs.unshift(paymentRecord);
+      saveAppData();
+
+      // 1. Play loud payment synthesizer chime & push notification
+      triggerInstantPaymentAlert(payerInfo, amount, sessionTxn);
+
+      // 2. Show Live Verification Banner in UI
+      const verifyCard = document.getElementById('paymentVerifiedCard');
+      if (verifyCard) {
+        verifyCard.classList.remove('hidden');
+      }
+
+      showToast(`धन्यवाद! ₹${amount} पेमेंट की सूचना मालिक को भेज दी गई है।`, 'success');
+
+      // 3. Automated WhatsApp message to Owner with payment details
+      const ownerWaPhone = (appData.whatsapp || '9876543210').replace(/[^0-9]/g, '');
+      const fullOwnerWa = ownerWaPhone.length === 10 ? '91' + ownerWaPhone : ownerWaPhone;
+
+      const paymentMsg = 
+`*⚡ BALARAM LATHE MACHINE - 1-CLICK PAYMENT ALERT*
+---------------------------------------------
+*📌 Txn ID:* ${sessionTxn}
+*👤 ग्राहक / पहचान:* ${payerInfo}
+*💵 चुकाई गई राशि:* ₹${amount}
+*📱 माध्यम:* UPI QR स्कैन
+*🔢 रिफरेंस:* ${finalUtr}
+*⏰ समय:* ${paymentRecord.time}
+---------------------------------------------
+ग्राहक ने वेबसाइट पर पेमेंट की पुष्टि कर दी है। कृपया बैंक में चेक करें।`;
+
+      setTimeout(() => {
+        window.open(`https://wa.me/${fullOwnerWa}?text=${encodeURIComponent(paymentMsg)}`, '_blank');
+      }, 700);
+
+      // Refresh 10-min session for next order
+      setTimeout(() => {
+        startTenMinutePaymentSession();
+      }, 1500);
+    }
+
+    /* 11. ADMIN CONTROL ROOM ACTIONS */
+    function syncAdminControlUI() {
+      document.getElementById('adminMerchantInput').value = appData.merchantName || 'BALARAM LATHE MACHINE';
+      document.getElementById('adminUpiInput').value = appData.upiId || 'balaramlathe@upi';
+      document.getElementById('adminCallPhoneInput').value = appData.phone || '9876543210';
+      document.getElementById('adminWaPhoneInput').value = appData.whatsapp || '9876543210';
+
+      applyKillSwitchState();
+      renderAdminTicketsList();
+      renderAdminUtrList();
+    }
+
+    function updateAllContactLinks() {
+      const phone = appData.phone || '9876543210';
+      const wa = appData.whatsapp || '9876543210';
+      const tel = `tel:+91${phone}`;
+      const waLink = `https://wa.me/91${wa}`;
+
+      const quickCall = document.getElementById('headerQuickCall');
+      if (quickCall) quickCall.href = tel;
+      const quickCallTxt = document.getElementById('headerQuickCallText');
+      if (quickCallTxt) quickCallTxt.textContent = '+91 ' + phone;
+
+      const dCall = document.getElementById('dispatchCallBtn');
+      if (dCall) dCall.href = tel;
+      const dCallTxt = document.getElementById('dispatchCallText');
+      if (dCallTxt) dCallTxt.textContent = '+91 ' + phone;
+
+      const dWaTxt = document.getElementById('dispatchWaText');
+      if (dWaTxt) dWaTxt.textContent = '+91 ' + wa;
+
+      const mCall = document.getElementById('maintCallBtn');
+      if (mCall) mCall.href = tel;
+      const mWa = document.getElementById('maintWaBtn');
+      if (mWa) mWa.href = waLink;
+    }
+
+    function handleAdminSaveContacts(e) {
+      e.preventDefault();
+      appData.phone = document.getElementById('adminCallPhoneInput').value.trim();
+      appData.whatsapp = document.getElementById('adminWaPhoneInput').value.trim();
+      saveAppData();
+      updateAllContactLinks();
+      showToast('संपर्क नंबर सफलतापूर्वक अपडेट कर दिए गए!', 'success');
+    }
+
+    function handleAdminSaveUpiConfig(e) {
+      e.preventDefault();
+      appData.merchantName = document.getElementById('adminMerchantInput').value.trim();
+      appData.upiId = document.getElementById('adminUpiInput').value.trim();
+      saveAppData();
+      refreshCustomerQrCode();
+      showToast('UPI मर्चेंट सेटिंग्स सुरक्षित!', 'success');
+    }
+
+    function handleAdminChangeKey(e) {
+      e.preventDefault();
+      const k1 = document.getElementById('adminNewKey').value.trim();
+      const k2 = document.getElementById('adminConfirmKey').value.trim();
+
+      if (k1.length !== 16) {
+        showToast('त्रुटि: कोड ठीक 16 अंक का होना चाहिए!', 'error');
+        return;
+      }
+      if (k1 !== k2) {
+        showToast('त्रुटि: दोनों कोड मेल नहीं खा रहे हैं!', 'error');
+        return;
+      }
+
+      appData.adminPasscode = k1;
+      saveAppData();
+      showToast('16-अंकों का मास्टर पासकोड बदला गया!', 'success');
+      document.getElementById('adminNewKey').value = '';
+      document.getElementById('adminConfirmKey').value = '';
+    }
+
+    function renderAdminTicketsList() {
+      const container = document.getElementById('adminTicketList');
+      const badge = document.getElementById('ticketCountBadge');
+      const list = appData.tickets || [];
+      badge.textContent = list.length;
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="text-[11px] text-slate-500 text-center py-4 font-tech">कोई टिकट दर्ज नहीं है।</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(t => `
+        <div class="p-3 rounded-xl bg-ninjaCard border border-ninjaBorder text-[11px] space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-konohaOrange font-mono">${t.id}</span>
+            <span class="text-slate-400 font-tech">${t.time}</span>
+          </div>
+          <div class="text-white font-bold">${t.name} (${t.phone})</div>
+          <div class="text-chakraCyan font-tech">${t.machine} • ${t.category}</div>
+          <div class="text-slate-300">${t.desc}</div>
+          ${t.media ? `
+            <div class="pt-1">
+              ${t.media.type === 'video' ? `
+                <video src="${t.media.data}" controls class="max-h-36 rounded-lg border border-slate-700"></video>
+              ` : `
+                <a href="${t.media.data}" target="_blank">
+                  <img src="${t.media.data}" class="max-h-28 rounded-lg border border-slate-700 object-cover" alt="Ticket Attachment">
+                </a>
+              `}
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderAdminUtrList() {
+      const container = document.getElementById('adminUtrList');
+      const badge = document.getElementById('utrCountBadge');
+      const list = appData.utrLogs || [];
+      badge.textContent = list.length;
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="text-[11px] text-slate-500 text-center py-4 font-tech">कोई UTR रसीद नहीं है।</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(u => `
+        <div class="p-2.5 rounded-xl bg-ninjaCard border border-ninjaBorder text-[11px] space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-emerald-400 font-mono">${u.id} ${u.txnId ? `• <span class="text-chakraCyan font-mono text-[10px]">${u.txnId}</span>` : ''}</span>
+            <span class="font-bold text-konohaOrange">₹${u.amount}</span>
+          </div>
+          <div class="text-white font-bold">${u.name} (${u.phone})</div>
+          <div class="text-slate-300 font-mono">UTR: <b class="text-emerald-300">${u.utr}</b> via ${u.app}</div>
+        </div>
+      `).join('');
+    }
+
+    function clearAllTickets() {
+      appData.tickets = [];
+      saveAppData();
+      renderAdminTicketsList();
+      showToast('सभी टिकट हटाए गए', 'info');
+    }
+
+    function clearAllUtrs() {
+      appData.utrLogs = [];
+      saveAppData();
+      renderAdminUtrList();
+      showToast('सभी UTR हटाए गए', 'info');
+    }
+
+    /* 12. INITIALIZATION */
+    window.onload = function() {
+      loadAppData();
+      applyKillSwitchState();
+      startTenMinutePaymentSession();
+      applyLanguageDict();
+      updateAllContactLinks();
+    };
+  </script>
+</body>
+</html>
