@@ -1265,7 +1265,7 @@
       upiId: 'balaramlathe@upi',
       phone: '9876543210',
       whatsapp: '9876543210',
-      firebaseDbUrl: '',
+      firebaseDbUrl: 'https://balaram-leth-default-rtdb.firebaseio.com',
       tickets: [
         {
           id: 'TKT-108',
@@ -1303,6 +1303,9 @@
           appData = JSON.parse(stored);
           if (!appData.adminPasscodeHash) {
             appData.adminPasscodeHash = '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6';
+          }
+          if (!appData.firebaseDbUrl) {
+            appData.firebaseDbUrl = 'https://balaram-leth-default-rtdb.firebaseio.com';
           }
         } else {
           appData = { ...INITIAL_CONFIG };
@@ -1554,23 +1557,16 @@
       }
     }
 
-        /* CLOUD DATABASE SYNC ENGINE (FIREBASE REALTIME DB) */
+        /* CLOUD DATABASE SYNC ENGINE (FIREBASE REALTIME DB - GLOBAL SYNC) */
     let firebaseDbInstance = null;
     let isCloudConnected = false;
+    const DEFAULT_CLOUD_DB = 'https://balaram-leth-default-rtdb.firebaseio.com';
 
     function initFirebaseCloudSync() {
-      const dbUrl = appData.firebaseDbUrl ? appData.firebaseDbUrl.trim().replace(/\/$/, '') : '';
+      const dbUrl = (appData.firebaseDbUrl || DEFAULT_CLOUD_DB).trim().replace(/\/$/, '');
       const badge = document.getElementById('cloudStatusBadge');
       const input = document.getElementById('adminFirebaseDbUrlInput');
       if (input) input.value = dbUrl;
-
-      if (!dbUrl) {
-        if (badge) {
-          badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-amber-950 text-amber-400 border border-amber-600/50';
-          badge.textContent = 'लोकल मोड (Cloud URL नहीं डाला)';
-        }
-        return;
-      }
 
       try {
         if (!firebase.apps.length) {
@@ -1589,40 +1585,76 @@
               badge.textContent = '🟢 क्लाउड कनेक्टेड (Live Sync ON)';
             }
 
-            // Sync kill switch across all devices
+            let needsSave = false;
+
+            // 1. Sync Website Lockdown across all devices
             if (typeof cloudData.isWebsiteLive !== 'undefined' && appData.isWebsiteLive !== cloudData.isWebsiteLive) {
               appData.isWebsiteLive = cloudData.isWebsiteLive;
-              localStorage.setItem('balaram_shinobi_v3', JSON.stringify(appData));
               applyKillSwitchState();
-              if (appData.isWebsiteLive) {
-                showToast('क्लाउड अपडेट: वेबसाइट पुनः लाइव कर दी गई है!', 'success');
-              } else {
-                showToast('क्लाउड अलर्ट: वर्कशॉप को एडमिन द्वारा लॉकडाउन कर दिया गया!', 'error');
-              }
+              needsSave = true;
             }
 
-            // Sync contacts & UPI if updated on cloud
+            // 2. Sync Master Passcode Hash
+            if (cloudData.adminPasscodeHash && cloudData.adminPasscodeHash !== appData.adminPasscodeHash) {
+              appData.adminPasscodeHash = cloudData.adminPasscodeHash;
+              needsSave = true;
+            }
+
+            // 3. Sync Contacts & Numbers
             if (cloudData.phone && cloudData.phone !== appData.phone) {
               appData.phone = cloudData.phone;
+              needsSave = true;
             }
             if (cloudData.whatsapp && cloudData.whatsapp !== appData.whatsapp) {
               appData.whatsapp = cloudData.whatsapp;
+              needsSave = true;
             }
+
+            // 4. Sync UPI & Merchant
             if (cloudData.upiId && cloudData.upiId !== appData.upiId) {
               appData.upiId = cloudData.upiId;
+              needsSave = true;
             }
             if (cloudData.merchantName && cloudData.merchantName !== appData.merchantName) {
               appData.merchantName = cloudData.merchantName;
+              needsSave = true;
             }
-            localStorage.setItem('balaram_shinobi_v3', JSON.stringify(appData));
-            updateAllContactLinks();
-            refreshCustomerQrCode();
+
+            // 5. Sync Tickets & Payment Ledger
+            if (Array.isArray(cloudData.tickets)) {
+              appData.tickets = cloudData.tickets;
+              renderAdminTicketsList();
+              needsSave = true;
+            }
+            if (Array.isArray(cloudData.utrLogs)) {
+              appData.utrLogs = cloudData.utrLogs;
+              renderAdminUtrList();
+              needsSave = true;
+            }
+
+            if (needsSave) {
+              localStorage.setItem('balaram_shinobi_v3', JSON.stringify(appData));
+              updateAllContactLinks();
+              refreshCustomerQrCode();
+            }
+          } else {
+            // First time cloud initialization: push current initial state to cloud
+            syncStateToCloud({
+              isWebsiteLive: appData.isWebsiteLive,
+              adminPasscodeHash: appData.adminPasscodeHash,
+              merchantName: appData.merchantName,
+              upiId: appData.upiId,
+              phone: appData.phone,
+              whatsapp: appData.whatsapp,
+              tickets: appData.tickets || [],
+              utrLogs: appData.utrLogs || []
+            });
           }
         }, (error) => {
           console.error("Firebase Sync Error:", error);
           if (badge) {
             badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-600/50';
-            badge.textContent = 'कनेक्शन एरर (URL चेक करें)';
+            badge.textContent = 'कनेक्शन एरर (Rules / URL चेक करें)';
           }
         });
       } catch (err) {
@@ -1632,8 +1664,7 @@
 
     function syncStateToCloud(patchObj) {
       if (!firebaseDbInstance) {
-        // Fallback: If DB URL is entered but not init, try init
-        if (appData.firebaseDbUrl) initFirebaseCloudSync();
+        initFirebaseCloudSync();
       }
 
       if (firebaseDbInstance) {
@@ -1647,20 +1678,18 @@
         } catch (e) {
           console.error(e);
         }
-      } else {
-        // Prompt admin to configure cloud URL
-        showToast('लोकल सेव हुआ। सभी ब्राउज़रों में सिंक हेतु क्लाउड URL जोड़ें।', 'info');
       }
     }
 
     function handleAdminSaveCloudConfig(e) {
       e.preventDefault();
       const url = document.getElementById('adminFirebaseDbUrlInput').value.trim();
-      appData.firebaseDbUrl = url;
+      appData.firebaseDbUrl = url || DEFAULT_CLOUD_DB;
       saveAppData();
       initFirebaseCloudSync();
       syncStateToCloud({
         isWebsiteLive: appData.isWebsiteLive,
+        adminPasscodeHash: appData.adminPasscodeHash,
         phone: appData.phone,
         whatsapp: appData.whatsapp,
         upiId: appData.upiId,
@@ -1670,10 +1699,6 @@
     }
 
     function testCloudConnection() {
-      if (!appData.firebaseDbUrl) {
-        showToast('कृपया पहले Firebase Database URL भरें!', 'error');
-        return;
-      }
       initFirebaseCloudSync();
       showToast('क्लाउड टेस्ट किया जा रहा है...', 'info');
     }
@@ -1901,6 +1926,7 @@
       if (!appData.tickets) appData.tickets = [];
       appData.tickets.unshift(ticket);
       saveAppData();
+      syncStateToCloud({ tickets: appData.tickets });
 
       showToast(`धन्यवाद ${ticket.name}! टिकट #${ticket.id} दर्ज हुआ।`, 'success');
       document.getElementById('problemTicketForm').reset();
@@ -1954,6 +1980,7 @@
       if (!appData.utrLogs) appData.utrLogs = [];
       appData.utrLogs.unshift(paymentRecord);
       saveAppData();
+      syncStateToCloud({ utrLogs: appData.utrLogs });
 
       // 1. Play loud payment synthesizer chime & push notification
       triggerInstantPaymentAlert(payerInfo, amount, sessionTxn);
@@ -2065,7 +2092,8 @@
 
       appData.adminPasscodeHash = await hashStringSHA256(k1);
       saveAppData();
-      showToast('16-अंकों का मास्टर पासकोड बदला गया (SHA-256 सुरक्षित)!', 'success');
+      syncStateToCloud({ adminPasscodeHash: appData.adminPasscodeHash });
+      showToast('16-अंकों का मास्टर पासकोड बदला गया व क्लाउड पर सुरक्षित हुआ!', 'success');
       document.getElementById('adminNewKey').value = '';
       document.getElementById('adminConfirmKey').value = '';
     }
@@ -2131,6 +2159,7 @@
     function clearAllTickets() {
       appData.tickets = [];
       saveAppData();
+      syncStateToCloud({ tickets: [] });
       renderAdminTicketsList();
       showToast('सभी टिकट हटाए गए', 'info');
     }
@@ -2138,6 +2167,7 @@
     function clearAllUtrs() {
       appData.utrLogs = [];
       saveAppData();
+      syncStateToCloud({ utrLogs: [] });
       renderAdminUtrList();
       showToast('सभी UTR हटाए गए', 'info');
     }
