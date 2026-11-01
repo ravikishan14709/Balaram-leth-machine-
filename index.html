@@ -112,6 +112,9 @@
       background: #ff6b00;
     }
   </style>
+  <!-- Firebase Realtime Cloud Database SDK (Free Global Sync) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 
 <body class="text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-konohaOrange selection:text-black ninja-bg-pattern min-h-screen flex flex-col relative">
@@ -313,6 +316,44 @@
             <div class="w-16 h-9 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all peer-checked:bg-emerald-500"></div>
           </label>
         </div>
+      </div>
+
+            <!-- Control 1.5: Free Cloud Database Realtime Sync (Firebase) -->
+      <div class="bg-ninjaSlate border border-chakraCyan/40 rounded-2xl p-5 mb-6 shadow-chakra">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-ninjaBorder">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-cloud-bolt text-chakraCyan text-lg"></i>
+            <div>
+              <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white">
+                क्लाउड डेटाबेस सिंक (Global Realtime Lock)
+              </h4>
+              <span class="text-[10px] text-chakraCyan font-tech">FIREBASE REALTIME DB • DUNIYA BHAR ME INSTANT LOCK</span>
+            </div>
+          </div>
+          <span id="cloudStatusBadge" class="text-[10px] font-tech px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+            Checking Cloud...
+          </span>
+        </div>
+
+        <p class="text-xs text-slate-300 mb-3 font-tech">
+          Firebase Realtime Database URL जोड़ें ताकि एक फोन से लॉक करने पर सभी ग्राहकों के फोन में तुरंत वेबसाइट बंद हो जाए।
+        </p>
+
+        <form onsubmit="handleAdminSaveCloudConfig(event)" class="space-y-3">
+          <div>
+            <label class="block text-[11px] font-tech uppercase text-slate-400 mb-1">Firebase Database URL (e.g. https://your-app-default-rtdb.firebaseio.com/)</label>
+            <input type="url" id="adminFirebaseDbUrlInput" placeholder="https://your-project-default-rtdb.firebaseio.com" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-chakraSpark font-mono focus:outline-none focus:border-chakraCyan">
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="submit" class="py-2 px-4 bg-chakraCyan hover:bg-chakraBlue text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center gap-1.5 shadow-chakra">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>क्लाउड URL सेव व कनेक्ट करें</span>
+            </button>
+            <button type="button" onclick="testCloudConnection()" class="py-2 px-3 bg-ninjaCard hover:bg-slate-700 text-slate-300 font-bold rounded-xl border border-slate-600 transition font-tech text-xs">
+              <i class="fa-solid fa-satellite-dish mr-1"></i> टेस्ट कनेक्शन
+            </button>
+          </div>
+        </form>
       </div>
 
       <!-- Control 2: Contact Numbers & WhatsApp Setup (NEWLY ADDED) -->
@@ -1219,11 +1260,12 @@
     /* 2. PERSISTENT STORAGE MANAGEMENT */
     const INITIAL_CONFIG = {
       isWebsiteLive: true,
-      adminPasscode: '9876543210123456',
+      adminPasscodeHash: '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6',
       merchantName: 'BALARAM LATHE MACHINE',
       upiId: 'balaramlathe@upi',
       phone: '9876543210',
       whatsapp: '9876543210',
+      firebaseDbUrl: '',
       tickets: [
         {
           id: 'TKT-108',
@@ -1259,8 +1301,8 @@
         const stored = localStorage.getItem('balaram_shinobi_v3');
         if (stored) {
           appData = JSON.parse(stored);
-          if (!appData.adminPasscode || appData.adminPasscode.length !== 16) {
-            appData.adminPasscode = '9876543210123456';
+          if (!appData.adminPasscodeHash) {
+            appData.adminPasscodeHash = '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6';
           }
         } else {
           appData = { ...INITIAL_CONFIG };
@@ -1433,17 +1475,26 @@
       }
     }
 
-    function verifySecretAdminKey(e) {
+    /* MILITARY-GRADE SHA-256 CRYPTOGRAPHIC SECURITY (ZERO PLAIN-TEXT PASSCODE) */
+    async function hashStringSHA256(str) {
+      const msgBuffer = new TextEncoder().encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function verifySecretAdminKey(e) {
       e.preventDefault();
       const entered = document.getElementById('adminModalKeyInput').value.trim();
-      const actual = appData.adminPasscode || '9876543210123456';
+      const targetHash = appData.adminPasscodeHash || '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6';
 
       if (entered.length !== 16) {
         showToast('त्रुटि: पासकोड ठीक 16 अंक का होना चाहिए!', 'error');
         return;
       }
 
-      if (entered === actual) {
+      const enteredHash = await hashStringSHA256(entered);
+      if (enteredHash === targetHash) {
         closeSecretAdminAuth();
         openAdminControlRoom();
         showToast('प्रमाणीकरण सफल! एडमिन कंट्रोल रूम सक्रिय।', 'success');
@@ -1493,11 +1544,138 @@
       saveAppData();
       applyKillSwitchState();
 
+      // Instantly sync lock/unlock across all devices globally via Cloud
+      syncStateToCloud({ isWebsiteLive: appData.isWebsiteLive });
+
       if (appData.isWebsiteLive) {
         showToast('वेबसाइट पुनः लाइव चालू कर दी गई है!', 'success');
       } else {
-        showToast('इमरजेंसी लॉकडाउन सक्रिय: पूरी वेबसाइट बंद!', 'error');
+        showToast('इमरजेंसी लॉकडाउन सक्रिय: पूरी दुनिया में वेबसाइट बंद!', 'error');
       }
+    }
+
+        /* CLOUD DATABASE SYNC ENGINE (FIREBASE REALTIME DB) */
+    let firebaseDbInstance = null;
+    let isCloudConnected = false;
+
+    function initFirebaseCloudSync() {
+      const dbUrl = appData.firebaseDbUrl ? appData.firebaseDbUrl.trim().replace(/\/$/, '') : '';
+      const badge = document.getElementById('cloudStatusBadge');
+      const input = document.getElementById('adminFirebaseDbUrlInput');
+      if (input) input.value = dbUrl;
+
+      if (!dbUrl) {
+        if (badge) {
+          badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-amber-950 text-amber-400 border border-amber-600/50';
+          badge.textContent = 'लोकल मोड (Cloud URL नहीं डाला)';
+        }
+        return;
+      }
+
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp({ databaseURL: dbUrl });
+        }
+        firebaseDbInstance = firebase.database();
+
+        // Listen in REAL TIME to global status changes across all devices worldwide
+        const statusRef = firebaseDbInstance.ref('workshop_global_state');
+        statusRef.on('value', (snapshot) => {
+          const cloudData = snapshot.val();
+          if (cloudData) {
+            isCloudConnected = true;
+            if (badge) {
+              badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/50';
+              badge.textContent = '🟢 क्लाउड कनेक्टेड (Live Sync ON)';
+            }
+
+            // Sync kill switch across all devices
+            if (typeof cloudData.isWebsiteLive !== 'undefined' && appData.isWebsiteLive !== cloudData.isWebsiteLive) {
+              appData.isWebsiteLive = cloudData.isWebsiteLive;
+              localStorage.setItem('balaram_shinobi_v3', JSON.stringify(appData));
+              applyKillSwitchState();
+              if (appData.isWebsiteLive) {
+                showToast('क्लाउड अपडेट: वेबसाइट पुनः लाइव कर दी गई है!', 'success');
+              } else {
+                showToast('क्लाउड अलर्ट: वर्कशॉप को एडमिन द्वारा लॉकडाउन कर दिया गया!', 'error');
+              }
+            }
+
+            // Sync contacts & UPI if updated on cloud
+            if (cloudData.phone && cloudData.phone !== appData.phone) {
+              appData.phone = cloudData.phone;
+            }
+            if (cloudData.whatsapp && cloudData.whatsapp !== appData.whatsapp) {
+              appData.whatsapp = cloudData.whatsapp;
+            }
+            if (cloudData.upiId && cloudData.upiId !== appData.upiId) {
+              appData.upiId = cloudData.upiId;
+            }
+            if (cloudData.merchantName && cloudData.merchantName !== appData.merchantName) {
+              appData.merchantName = cloudData.merchantName;
+            }
+            localStorage.setItem('balaram_shinobi_v3', JSON.stringify(appData));
+            updateAllContactLinks();
+            refreshCustomerQrCode();
+          }
+        }, (error) => {
+          console.error("Firebase Sync Error:", error);
+          if (badge) {
+            badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-600/50';
+            badge.textContent = 'कनेक्शन एरर (URL चेक करें)';
+          }
+        });
+      } catch (err) {
+        console.error("Firebase Init Error:", err);
+      }
+    }
+
+    function syncStateToCloud(patchObj) {
+      if (!firebaseDbInstance) {
+        // Fallback: If DB URL is entered but not init, try init
+        if (appData.firebaseDbUrl) initFirebaseCloudSync();
+      }
+
+      if (firebaseDbInstance) {
+        try {
+          firebaseDbInstance.ref('workshop_global_state').update(patchObj).then(() => {
+            showToast('क्लाउड पर तुरंत सिंक हो गया! सभी डिवाइस में अपडेट।', 'success');
+          }).catch(err => {
+            console.error("Cloud push failed:", err);
+            showToast('क्लाउड सिंक एरर: ' + err.message, 'error');
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        // Prompt admin to configure cloud URL
+        showToast('लोकल सेव हुआ। सभी ब्राउज़रों में सिंक हेतु क्लाउड URL जोड़ें।', 'info');
+      }
+    }
+
+    function handleAdminSaveCloudConfig(e) {
+      e.preventDefault();
+      const url = document.getElementById('adminFirebaseDbUrlInput').value.trim();
+      appData.firebaseDbUrl = url;
+      saveAppData();
+      initFirebaseCloudSync();
+      syncStateToCloud({
+        isWebsiteLive: appData.isWebsiteLive,
+        phone: appData.phone,
+        whatsapp: appData.whatsapp,
+        upiId: appData.upiId,
+        merchantName: appData.merchantName
+      });
+      showToast('Firebase Cloud Database URL सुरक्षित!', 'success');
+    }
+
+    function testCloudConnection() {
+      if (!appData.firebaseDbUrl) {
+        showToast('कृपया पहले Firebase Database URL भरें!', 'error');
+        return;
+      }
+      initFirebaseCloudSync();
+      showToast('क्लाउड टेस्ट किया जा रहा है...', 'info');
     }
 
     /* 8. 10-MINUTE RAILWAY STYLE SECURE GATEWAY & QR ENGINE */
@@ -1857,6 +2035,7 @@
       appData.whatsapp = document.getElementById('adminWaPhoneInput').value.trim();
       saveAppData();
       updateAllContactLinks();
+      syncStateToCloud({ phone: appData.phone, whatsapp: appData.whatsapp });
       showToast('संपर्क नंबर सफलतापूर्वक अपडेट कर दिए गए!', 'success');
     }
 
@@ -1866,10 +2045,11 @@
       appData.upiId = document.getElementById('adminUpiInput').value.trim();
       saveAppData();
       refreshCustomerQrCode();
+      syncStateToCloud({ merchantName: appData.merchantName, upiId: appData.upiId });
       showToast('UPI मर्चेंट सेटिंग्स सुरक्षित!', 'success');
     }
 
-    function handleAdminChangeKey(e) {
+    async function handleAdminChangeKey(e) {
       e.preventDefault();
       const k1 = document.getElementById('adminNewKey').value.trim();
       const k2 = document.getElementById('adminConfirmKey').value.trim();
@@ -1883,9 +2063,9 @@
         return;
       }
 
-      appData.adminPasscode = k1;
+      appData.adminPasscodeHash = await hashStringSHA256(k1);
       saveAppData();
-      showToast('16-अंकों का मास्टर पासकोड बदला गया!', 'success');
+      showToast('16-अंकों का मास्टर पासकोड बदला गया (SHA-256 सुरक्षित)!', 'success');
       document.getElementById('adminNewKey').value = '';
       document.getElementById('adminConfirmKey').value = '';
     }
@@ -1969,6 +2149,7 @@
       startTenMinutePaymentSession();
       applyLanguageDict();
       updateAllContactLinks();
+      initFirebaseCloudSync();
     };
   </script>
 </body>
