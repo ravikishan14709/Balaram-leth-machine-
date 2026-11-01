@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KONOHA COMMAND CENTER - BALARAM LATHE ADMIN</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Rajdhani, Bangers, Chakra Petch, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Chakra+Petch:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ninjaDark: '#070b14',
+            ninjaSlate: '#0e1626',
+            ninjaCard: '#141e34',
+            ninjaBorder: '#233252',
+            konohaOrange: '#ff6b00',
+            konohaFlame: '#ea580c',
+            chakraCyan: '#06b6d4',
+            chakraBlue: '#0284c7',
+            chakraSpark: '#38bdf8',
+            scrollGold: '#fbbf24'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Rajdhani', 'sans-serif'],
+            ninja: ['Bangers', 'cursive'],
+            tech: ['Chakra Petch', 'sans-serif']
+          },
+          boxShadow: {
+            'chakra': '0 0 25px rgba(6, 182, 212, 0.35)',
+            'rasengan': '0 0 35px rgba(255, 107, 0, 0.45)',
+            'seal': '0 0 18px rgba(251, 191, 36, 0.35)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .ninja-bg-pattern {
+      background-color: #070b14;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(255, 107, 0, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(6, 182, 212, 0.09) 0%, transparent 45%),
+        linear-gradient(to right, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 107, 0, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+    }
+    @keyframes rotateChuck { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .uzumaki-spin { animation: rotateChuck 18s linear infinite; }
+  </style>
+
+  <!-- Official Google Firebase Cloud & Auth SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+
+<body class="text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-konohaOrange selection:text-black ninja-bg-pattern min-h-screen flex flex-col relative">
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-2"></div>
+
+  <!-- ================= SCREEN 1: SECURE GATEWAY (LOGIN REQUIRED) ================= -->
+  <div id="loginGateScreen" class="flex-1 flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-ninjaCard border-2 border-konohaOrange rounded-3xl p-7 sm:p-8 shadow-2xl relative text-center space-y-5">
+      
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-ninjaSlate border-2 border-konohaOrange text-konohaOrange flex items-center justify-center shadow-seal">
+        <i class="fa-solid fa-shield-halved text-3xl"></i>
+      </div>
+
+      <div>
+        <span class="text-[10px] font-tech text-konohaOrange bg-konohaOrange/10 px-2.5 py-0.5 rounded uppercase tracking-widest border border-konohaOrange/30">
+          AUTHORIZED SHINOBI ONLY • ISOLATED PORTAL
+        </span>
+        <h2 class="text-2xl font-black font-ninja uppercase tracking-wider text-white mt-2">
+          एडमिन गुप्त कंट्रोल रूम
+        </h2>
+        <p class="text-xs text-slate-400 mt-1 font-tech">
+          बलराम लेथ मशीन बाराद्वार • Google Cloud Verified Login
+        </p>
+      </div>
+
+      <!-- Auth Status Badge -->
+      <div id="firebaseAuthStatusBadge" class="bg-ninjaSlate/80 border border-slate-700 rounded-xl p-2.5 text-left text-xs font-tech flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span id="authStatusDot" class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          <span id="authStatusText" class="text-slate-300 font-bold">Google Auth: लॉगिन आवश्यक</span>
+        </div>
+        <span class="text-[10px] text-slate-500 font-mono">ravikishan14709@gmail.com</span>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-tech uppercase text-slate-300 mb-1">16-Digit Master Passcode *</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="adminPasscodeInput" 
+              maxlength="16" 
+              minlength="16" 
+              placeholder="16-Digit Passcode" 
+              required 
+              oninput="onKeyLengthInput(this.value)"
+              class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-3 text-sm text-konohaOrange font-mono tracking-widest focus:outline-none focus:border-konohaOrange pr-11">
+            <button 
+              type="button" 
+              onclick="toggleInputVisibility('adminPasscodeInput', 'eyeIcon1')" 
+              class="absolute right-3.5 top-3.5 text-slate-400 hover:text-white transition">
+              <i class="fa-solid fa-eye" id="eyeIcon1"></i>
+            </button>
+          </div>
+          <div class="flex justify-between items-center text-[11px] font-tech text-slate-400 mt-1.5">
+            <span>लंबाई: ठीक 16 अंक</span>
+            <span id="passcodeCounter" class="text-konohaOrange font-bold">0 / 16</span>
+          </div>
+        </div>
+
+        <div id="firebasePasswordWrapper">
+          <label class="block text-xs font-tech uppercase text-chakraCyan mb-1">
+            <i class="fa-solid fa-lock mr-1"></i> Firebase Console Password (ravikishan14709) *
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="adminFbPasswordInput" 
+              placeholder="Firebase Console वाला पासवर्ड दर्ज करें" 
+              class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-3 text-sm text-white font-mono focus:outline-none focus:border-chakraCyan pr-11">
+            <button 
+              type="button" 
+              onclick="toggleInputVisibility('adminFbPasswordInput', 'eyeIconFb')" 
+              class="absolute right-3.5 top-3.5 text-slate-400 hover:text-white transition">
+              <i class="fa-solid fa-eye" id="eyeIconFb"></i>
+            </button>
+          </div>
+          <p class="text-[10px] text-slate-400 font-tech mt-1">
+            * Google के सर्वर पर सीधे वेरीफाई होगा; हैकर Inspect Element से इसे बायपास नहीं कर सकता।
+          </p>
+        </div>
+
+        <button type="submit" id="btnLoginSubmit" class="w-full py-3 bg-gradient-to-r from-konohaOrange to-konohaFlame hover:brightness-110 text-black font-bold uppercase rounded-xl transition font-tech flex items-center justify-center gap-2 shadow-rasengan">
+          <i class="fa-solid fa-unlock-keyhole"></i>
+          <span id="btnLoginText">वेरीफाई व कंट्रोल रूम खोलें</span>
+        </button>
+      </form>
+
+      <div class="pt-3 border-t border-slate-800 text-center">
+        <a href="index.html" class="text-xs text-slate-400 hover:text-konohaOrange font-tech flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>मुख्य वेबसाइट पर वापस जाएं</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 2: AUTHENTICATED COMMAND CENTER ================= -->
+  <div id="commandCenterScreen" class="hidden flex-1 container mx-auto px-4 py-6 max-w-5xl">
+    
+    <!-- Header Bar -->
+    <header class="bg-ninjaCard border border-ninjaBorder rounded-3xl p-5 sm:p-6 mb-6 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-konohaOrange via-konohaFlame to-chakraBlue flex items-center justify-center shadow-rasengan overflow-hidden border border-amber-400/40">
+          <svg class="w-8 h-8 text-black uzumaki-spin opacity-85" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4a6 6 0 1 1-6 6 6 6 0 0 1 6-6zm0 4a2 2 0 1 0 2 2 2 2 0 0 0-2-2z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl sm:text-2xl font-black font-ninja uppercase tracking-wider text-white">BALARAM LATHE</h1>
+            <span class="text-xs font-tech bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/50">ADMIN ACTIVE</span>
+          </div>
+          <span class="text-xs text-chakraCyan font-tech">GOOGLE SERVER VERIFIED • ravikishan14709@gmail.com</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+        <a href="index.html" target="_blank" class="px-3.5 py-2 bg-ninjaSlate hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 text-xs font-tech transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>लाइव साइट देखें</span>
+        </a>
+        <button onclick="handleAdminLogout()" class="px-3.5 py-2 bg-red-950/80 hover:bg-red-800 text-red-200 rounded-xl border border-red-700 text-xs font-tech transition flex items-center gap-1.5">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>लॉगआउट</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Master Kill Switch -->
+    <div id="adminKillSwitchBox" class="bg-ninjaSlate border-2 border-emerald-500/50 rounded-3xl p-6 sm:p-7 mb-6 shadow-xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="killPingDot" class="inline-block w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-xs font-tech uppercase tracking-widest text-emerald-400 font-bold">MASTER KILL SWITCH (WORLDWIDE)</span>
+          </div>
+          <h3 id="adminKillStatusText" class="text-2xl sm:text-3xl font-black font-ninja uppercase text-emerald-400 mt-1">
+            वेबसाइट चालू है (Website is LIVE)
+          </h3>
+          <p class="text-xs text-slate-300 max-w-xl mt-1.5 font-tech leading-relaxed">
+            स्विच बंद करते ही दुनिया भर के सभी ग्राहकों के फोन में वेबसाइट तुरंत लॉक हो जाएगी और केवल इमरजेंसी संपर्क दिखेगा।
+          </p>
+        </div>
+
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="adminMasterKillToggle" onchange="handleKillToggle()" class="sr-only peer">
+          <div class="w-20 h-11 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-9 after:transition-all peer-checked:bg-emerald-500"></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Workshop Contact Numbers Form -->
+    <div class="bg-ninjaCard border border-ninjaBorder rounded-3xl p-6 mb-6 shadow-xl">
+      <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-ninjaBorder">
+        <div class="w-8 h-8 rounded-xl bg-konohaOrange/20 text-konohaOrange flex items-center justify-center">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold font-display uppercase tracking-wider text-white">
+            वर्कशॉप संपर्क नंबर सेटिंग्स (Contact Numbers)
+          </h3>
+          <span class="text-[11px] text-slate-400 font-tech">वेबसाइट के सभी कॉल और व्हाट्सएप बटन में यह नंबर तुरंत अपडेट हो जाएगा।</span>
+        </div>
+      </div>
+      <form onsubmit="handleSaveContacts(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-tech uppercase text-slate-300 mb-1">कॉलिंग नंबर (10 Digits) *</label>
+          <input type="tel" id="adminCallPhoneInput" required pattern="[0-9]{10}" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange font-mono">
+        </div>
+        <div>
+          <label class="block text-xs font-tech uppercase text-slate-300 mb-1">व्हाट्सएप नंबर (10 Digits) *</label>
+          <input type="tel" id="adminWaPhoneInput" required pattern="[0-9]{10}" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange font-mono">
+        </div>
+        <div class="sm:col-span-2">
+          <button type="submit" class="w-full py-2.5 bg-scrollGold hover:bg-amber-500 text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-2 shadow-lg">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>संपर्क नंबर Google Cloud पर सेव करें</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- UPI & Passcode Row -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      
+      <!-- UPI & QR Code -->
+      <div class="bg-ninjaCard border border-ninjaBorder rounded-3xl p-6 shadow-xl">
+        <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-ninjaBorder">
+          <div class="w-8 h-8 rounded-xl bg-konohaOrange/20 text-konohaOrange flex items-center justify-center">
+            <i class="fa-solid fa-qrcode"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold font-display uppercase tracking-wider text-white">
+              UPI व QR कोड सेटिंग्स
+            </h3>
+            <span class="text-[11px] text-slate-400 font-tech">ग्राहकों को दिखने वाला मर्चेंट नाम और UPI ID</span>
+          </div>
+        </div>
+
+        <form onsubmit="handleSaveUpi(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-tech uppercase text-slate-300 mb-1">मर्चेंट / वर्कशॉप नाम *</label>
+            <input type="text" id="adminMerchantInput" required class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-konohaOrange">
+          </div>
+          <div>
+            <label class="block text-xs font-tech uppercase text-slate-300 mb-1">दुकान की UPI ID (VPA) *</label>
+            <input type="text" id="adminUpiInput" required class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-konohaOrange">
+          </div>
+          <button type="submit" class="w-full py-2.5 bg-konohaOrange hover:bg-konohaFlame text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-2 shadow-rasengan">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>UPI सेटिंग्स Google Cloud पर सुरक्षित करें</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Change 16-Digit Master Passcode -->
+      <div class="bg-ninjaCard border border-ninjaBorder rounded-3xl p-6 shadow-xl">
+        <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-ninjaBorder">
+          <div class="w-8 h-8 rounded-xl bg-chakraCyan/20 text-chakraCyan flex items-center justify-center">
+            <i class="fa-solid fa-key"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold font-display uppercase tracking-wider text-white">
+              16-अंकों का मास्टर पासकोड बदलें
+            </h3>
+            <span class="text-[11px] text-slate-400 font-tech">कंट्रोल रूम का 16-अंकों का गुप्त कोड अपडेट करें</span>
+          </div>
+        </div>
+
+        <form onsubmit="handleChangePasscode(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-tech uppercase text-slate-300 mb-1">नया 16-अंक पासकोड *</label>
+            <input type="password" id="newPass1" minlength="16" maxlength="16" required placeholder="Exactly 16 digits" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-chakraCyan">
+          </div>
+          <div>
+            <label class="block text-xs font-tech uppercase text-slate-300 mb-1">दोबारा दर्ज करें *</label>
+            <input type="password" id="newPass2" minlength="16" maxlength="16" required placeholder="Repeat 16 digits" class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-chakraCyan">
+          </div>
+          <button type="submit" class="w-full py-2.5 bg-chakraCyan hover:bg-chakraBlue text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-2 shadow-chakra">
+            <i class="fa-solid fa-check"></i>
+            <span>नया पासकोड सुरक्षित करें</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Live Machine Tickets & Payment Ledger -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      
+      <!-- Tickets -->
+      <div class="bg-ninjaCard border border-ninjaBorder rounded-3xl p-6 shadow-xl space-y-3">
+        <div class="flex items-center justify-between border-b border-ninjaBorder pb-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-wrench text-konohaOrange"></i>
+            <h3 class="text-sm font-bold font-tech uppercase text-white">मशीन समस्या टिकट (<span id="ticketCountBadge">0</span>)</h3>
+          </div>
+          <button onclick="clearAllTickets()" class="text-xs text-red-400 hover:underline font-tech">सभी हटाएं (Clear)</button>
+        </div>
+        <div id="adminTicketList" class="max-h-64 overflow-y-auto space-y-2.5 pr-1"></div>
+      </div>
+
+      <!-- Payment Receipts -->
+      <div class="bg-ninjaCard border border-ninjaBorder rounded-3xl p-6 shadow-xl space-y-3">
+        <div class="flex items-center justify-between border-b border-ninjaBorder pb-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-receipt text-emerald-400"></i>
+            <h3 class="text-sm font-bold font-tech uppercase text-white">भुगतान रसीदें (<span id="utrCountBadge">0</span>)</h3>
+          </div>
+          <button onclick="clearAllUtrs()" class="text-xs text-red-400 hover:underline font-tech">सभी हटाएं (Clear)</button>
+        </div>
+        <div id="adminUtrList" class="max-h-64 overflow-y-auto space-y-2.5 pr-1"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyDk1-GKv5ZAqU1ZClgIA8iRcO3TSeuL5zg",
+      authDomain: "balaram-leth.firebaseapp.com",
+      databaseURL: "https://balaram-leth-default-rtdb.firebaseio.com",
+      projectId: "balaram-leth",
+      storageBucket: "balaram-leth.firebasestorage.app",
+      messagingSenderId: "25292230989",
+      appId: "1:25292230989:web:69634ba4cebc15ccc6a704"
+    };
+
+    const ADMIN_EMAIL = "ravikishan14709@gmail.com";
+    let firebaseDbInstance = null;
+    let localData = {
+      isWebsiteLive: true,
+      adminPasscodeHash: '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6',
+      merchantName: 'BALARAM LATHE',
+      upiId: '9340254535@ybl',
+      phone: '9977639263',
+      whatsapp: '9340254535',
+      tickets: [],
+      utrLogs: []
+    };
+
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      let border = type === 'success' ? 'border-emerald-400 text-emerald-400' : (type === 'error' ? 'border-red-500 text-red-400' : 'border-konohaOrange text-konohaOrange');
+      toast.className = `bg-ninjaSlate/95 border-2 ${border} px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-tech font-bold flex items-center gap-2 backdrop-blur-md`;
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full bg-current animate-ping"></span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    function onKeyLengthInput(val) {
+      const c = document.getElementById('passcodeCounter');
+      if (c) {
+        c.textContent = `${val.length} / 16`;
+        c.className = val.length === 16 ? 'text-emerald-400 font-bold' : 'text-konohaOrange font-bold';
+      }
+    }
+
+    function toggleInputVisibility(inpId, iconId) {
+      const inp = document.getElementById(inpId);
+      const icon = document.getElementById(iconId);
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        inp.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    }
+
+    async function hashStringSHA256(str) {
+      const msgBuffer = new TextEncoder().encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function initFirebase() {
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(FIREBASE_CONFIG);
+        }
+        firebaseDbInstance = firebase.database();
+
+        firebase.auth().onAuthStateChanged((user) => {
+          const isGoogleAuth = user && user.email === ADMIN_EMAIL;
+          updateAuthBadge(isGoogleAuth, user ? user.email : null);
+          if (isGoogleAuth) {
+            // Check if session unlocked
+            const isUnlocked = sessionStorage.getItem('blm_admin_unlocked') === 'true';
+            if (isUnlocked) {
+              showCommandCenter();
+            }
+          }
+        });
+
+        // Realtime sync listener
+        firebaseDbInstance.ref('workshop_global_state').on('value', (snap) => {
+          const val = snap.val();
+          if (val) {
+            localData = { ...localData, ...val };
+            syncUIFields();
+          }
+        }, (err) => {
+          showToast('सुरक्षा त्रुटि: ' + err.message, 'error');
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function updateAuthBadge(isLoggedIn, email) {
+      const dot = document.getElementById('authStatusDot');
+      const txt = document.getElementById('authStatusText');
+      const passWrap = document.getElementById('firebasePasswordWrapper');
+      if (isLoggedIn) {
+        if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping';
+        if (txt) { txt.className = 'text-emerald-400 font-bold'; txt.textContent = 'Google Server Verified: ' + email; }
+        if (passWrap) passWrap.classList.add('hidden');
+      } else {
+        if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+        if (txt) { txt.className = 'text-slate-300 font-bold'; txt.textContent = 'Google Server: लॉगिन आवश्यक'; }
+        if (passWrap) passWrap.classList.remove('hidden');
+      }
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const code = document.getElementById('adminPasscodeInput').value.trim();
+      const targetHash = localData.adminPasscodeHash || '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6';
+      const fbPassInput = document.getElementById('adminFbPasswordInput');
+      const submitBtn = document.getElementById('btnLoginSubmit');
+      const submitText = document.getElementById('btnLoginText');
+
+      if (code.length !== 16) {
+        showToast('त्रुटि: 16-अंकों का पासकोड ठीक 16 अंक का होना चाहिए!', 'error');
+        return;
+      }
+
+      const codeHash = await hashStringSHA256(code);
+      if (codeHash !== targetHash) {
+        showToast('अमान्य 16-अंक पासकोड! प्रवेश अस्वीकृत।', 'error');
+        return;
+      }
+
+      const currentUser = firebase.auth().currentUser;
+      if (currentUser && currentUser.email === ADMIN_EMAIL) {
+        sessionStorage.setItem('blm_admin_unlocked', 'true');
+        showCommandCenter();
+        showToast('Google प्रमाणीकरण सत्यापित! स्वागत है रवि-सामा।', 'success');
+        return;
+      }
+
+      const fbPass = fbPassInput ? fbPassInput.value.trim() : '';
+      if (!fbPass) {
+        showToast('कृपया Firebase Console Password दर्ज करें!', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitText.textContent = 'Google सर्वर से वेरीफाई हो रहा है...';
+
+      try {
+        await firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL, fbPass);
+        sessionStorage.setItem('blm_admin_unlocked', 'true');
+        showCommandCenter();
+        showToast('Google सर्वर प्रमाणीकरण सफल!', 'success');
+      } catch (authErr) {
+        showToast('Google पासवर्ड अस्वीकार हुआ! Console वाला पासवर्ड डालें।', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = 'वेरीफाई व कंट्रोल रूम खोलें';
+      }
+    }
+
+    function showCommandCenter() {
+      document.getElementById('loginGateScreen').classList.add('hidden');
+      document.getElementById('commandCenterScreen').classList.remove('hidden');
+      syncUIFields();
+    }
+
+    async function handleAdminLogout() {
+      sessionStorage.removeItem('blm_admin_unlocked');
+      await firebase.auth().signOut();
+      document.getElementById('commandCenterScreen').classList.add('hidden');
+      document.getElementById('loginGateScreen').classList.remove('hidden');
+      showToast('सफलतापूर्वक लॉगआउट किया गया।', 'info');
+    }
+
+    function syncUIFields() {
+      const toggle = document.getElementById('adminMasterKillToggle');
+      const statusText = document.getElementById('adminKillStatusText');
+      const pingDot = document.getElementById('killPingDot');
+      const box = document.getElementById('adminKillSwitchBox');
+
+      if (localData.isWebsiteLive) {
+        if (toggle) toggle.checked = true;
+        if (statusText) { statusText.textContent = "वेबसाइट चालू है (Website is LIVE)"; statusText.className = "text-2xl sm:text-3xl font-black font-ninja uppercase text-emerald-400 mt-1"; }
+        if (pingDot) pingDot.className = "inline-block w-3 h-3 rounded-full bg-emerald-400 animate-ping";
+        if (box) box.className = "bg-ninjaSlate border-2 border-emerald-500/50 rounded-3xl p-6 sm:p-7 mb-6 shadow-xl";
+      } else {
+        if (toggle) toggle.checked = false;
+        if (statusText) { statusText.textContent = "वेबसाइट बंद है (LOCKED DOWN)"; statusText.className = "text-2xl sm:text-3xl font-black font-ninja uppercase text-red-500 mt-1"; }
+        if (pingDot) pingDot.className = "inline-block w-3 h-3 rounded-full bg-red-500";
+        if (box) box.className = "bg-ninjaSlate border-2 border-red-500/70 rounded-3xl p-6 sm:p-7 mb-6 shadow-xl";
+      }
+
+      document.getElementById('adminCallPhoneInput').value = localData.phone || '';
+      document.getElementById('adminWaPhoneInput').value = localData.whatsapp || '';
+      document.getElementById('adminMerchantInput').value = localData.merchantName || '';
+      document.getElementById('adminUpiInput').value = localData.upiId || '';
+
+      renderTickets();
+      renderUtrs();
+    }
+
+    function syncToCloud(patch) {
+      if (firebaseDbInstance) {
+        firebaseDbInstance.ref('workshop_global_state').update(patch).then(() => {
+          showToast('Google Cloud पर तुरंत सुरक्षित सिंक हुआ!', 'success');
+        }).catch(err => {
+          showToast('सुरक्षा अस्वीकृत: ' + (err.code || err.message), 'error');
+        });
+      }
+    }
+
+    function handleKillToggle() {
+      const toggle = document.getElementById('adminMasterKillToggle');
+      syncToCloud({ isWebsiteLive: toggle.checked });
+    }
+
+    function handleSaveContacts(e) {
+      e.preventDefault();
+      const phone = document.getElementById('adminCallPhoneInput').value.trim();
+      const whatsapp = document.getElementById('adminWaPhoneInput').value.trim();
+      syncToCloud({ phone, whatsapp });
+    }
+
+    function handleSaveUpi(e) {
+      e.preventDefault();
+      const merchantName = document.getElementById('adminMerchantInput').value.trim();
+      const upiId = document.getElementById('adminUpiInput').value.trim();
+      syncToCloud({ merchantName, upiId });
+    }
+
+    async function handleChangePasscode(e) {
+      e.preventDefault();
+      const p1 = document.getElementById('newPass1').value.trim();
+      const p2 = document.getElementById('newPass2').value.trim();
+      if (p1.length !== 16) { showToast('त्रुटि: 16 अंक का होना चाहिए!', 'error'); return; }
+      if (p1 !== p2) { showToast('त्रुटि: दोनों पासकोड मेल नहीं खा रहे हैं!', 'error'); return; }
+      const newHash = await hashStringSHA256(p1);
+      syncToCloud({ adminPasscodeHash: newHash });
+      document.getElementById('newPass1').value = '';
+      document.getElementById('newPass2').value = '';
+      showToast('16-अंकों का पासकोड बदला गया!', 'success');
+    }
+
+    function renderTickets() {
+      const list = localData.tickets || [];
+      document.getElementById('ticketCountBadge').textContent = list.length;
+      const c = document.getElementById('adminTicketList');
+      if (list.length === 0) {
+        c.innerHTML = '<div class="text-xs text-slate-500 py-3 text-center font-tech">कोई टिकट नहीं है।</div>';
+        return;
+      }
+      c.innerHTML = list.map(t => `
+        <div class="p-3 rounded-2xl bg-ninjaSlate border border-ninjaBorder text-xs space-y-1.5 font-tech">
+          <div class="flex justify-between items-center"><span class="font-bold text-konohaOrange font-mono">${t.id}</span><span class="text-slate-400">${t.time}</span></div>
+          <div class="text-white font-bold">${t.name} (${t.phone})</div>
+          <div class="text-chakraCyan">${t.machine || ''} • ${t.category || ''}</div>
+          <div class="text-slate-300 font-sans">${t.desc}</div>
+          ${t.media ? `<div class="pt-1">${t.media.type === 'video' ? `<video src="${t.media.data}" controls class="max-h-32 rounded-lg border border-slate-700"></video>` : `<img src="${t.media.data}" class="max-h-24 rounded-lg border border-slate-700 object-cover" alt="attachment">`}</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderUtrs() {
+      const list = localData.utrLogs || [];
+      document.getElementById('utrCountBadge').textContent = list.length;
+      const c = document.getElementById('adminUtrList');
+      if (list.length === 0) {
+        c.innerHTML = '<div class="text-xs text-slate-500 py-3 text-center font-tech">कोई रसीद दर्ज नहीं है।</div>';
+        return;
+      }
+      c.innerHTML = list.map(u => `
+        <div class="p-3 rounded-2xl bg-ninjaSlate border border-ninjaBorder text-xs flex justify-between items-center font-tech">
+          <div><div class="font-bold text-emerald-400">${u.id} - ${u.name}</div><div class="text-slate-400">${u.time}</div><div class="text-slate-300 font-mono">UTR: ${u.utr || '1-Click'}</div></div>
+          <div class="text-konohaOrange font-bold text-base font-mono">₹${u.amount}</div>
+        </div>
+      `).join('');
+    }
+
+    function clearAllTickets() { syncToCloud({ tickets: [] }); }
+    function clearAllUtrs() { syncToCloud({ utrLogs: [] }); }
+
+    window.onload = function() {
+      initFirebase();
+    };
+  </script>
+</body>
+</html>

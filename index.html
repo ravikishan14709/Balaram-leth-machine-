@@ -112,8 +112,9 @@
       background: #ff6b00;
     }
   </style>
-  <!-- Firebase Realtime Cloud Database SDK (Free Global Sync) -->
+  <!-- Official Google Firebase Cloud & Auth SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 
@@ -202,7 +203,7 @@
 
       <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
         <span>📍 Baradwar (Champa - Raigarh Line), CG</span>
-        <button onclick="openSecretAdminAuth()" class="text-konohaOrange hover:text-white px-3 py-1.5 rounded-lg bg-ninjaCard border border-konohaOrange/50 font-tech flex items-center gap-1.5 hover:bg-konohaOrange hover:text-black transition shadow-seal">
+        <button href="admin.html" class="text-konohaOrange hover:text-white px-3 py-1.5 rounded-lg bg-ninjaCard border border-konohaOrange/50 font-tech flex items-center gap-1.5 hover:bg-konohaOrange hover:text-black transition shadow-seal">
           <i class="fa-solid fa-key"></i> <span data-i18n="adminUnsealBtn">🔐 गुप्त अनसील (एडमिन लॉगिन)</span>
         </button>
       </div>
@@ -210,265 +211,7 @@
     </div>
   </div>
 
-  <!-- ================= SECRET 16-DIGIT ADMIN PASSCODE MODAL ================= -->
-  <div id="secretAdminAuthModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="max-w-md w-full bg-ninjaCard border-2 border-konohaOrange rounded-3xl p-7 shadow-2xl relative text-center space-y-5">
-      
-      <button onclick="closeSecretAdminAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-
-      <div class="w-16 h-16 mx-auto rounded-2xl bg-ninjaSlate border-2 border-konohaOrange text-konohaOrange flex items-center justify-center shadow-seal">
-        <i class="fa-solid fa-fingerprint text-3xl"></i>
-      </div>
-
-      <div>
-        <span class="text-[10px] font-tech text-konohaOrange bg-konohaOrange/10 px-2.5 py-0.5 rounded uppercase tracking-widest border border-konohaOrange/30">
-          AUTHORIZED SHINOBI KEY ONLY
-        </span>
-        <h3 class="text-2xl font-black font-ninja uppercase tracking-wider text-white mt-2" data-i18n="adminModalTitle">
-          गुप्त एडमिन प्रमाणीकरण
-        </h3>
-        <p class="text-xs text-slate-400 mt-1" data-i18n="adminModalSub">
-          वेबसाइट नियंत्रण, किल-स्विच और UPI सेटिंग्स खोलने के लिए अपना 16-अंकों का मास्टर पासकोड दर्ज करें।
-        </p>
-      </div>
-
-      <form onsubmit="verifySecretAdminKey(event)" class="space-y-4 text-left">
-        <div>
-          <label class="block text-xs font-tech uppercase text-slate-300 mb-1">16-Digit Master Passcode *</label>
-          <div class="relative">
-            <input 
-              type="password" 
-              id="adminModalKeyInput" 
-              maxlength="16" 
-              minlength="16" 
-              placeholder="16-Digit Passcode" 
-              required 
-              oninput="onSecretAdminKeyInput(this.value)"
-              class="w-full bg-ninjaSlate border border-ninjaBorder rounded-xl px-4 py-3 text-sm text-konohaOrange font-mono tracking-widest focus:outline-none focus:border-konohaOrange pr-11">
-            <button 
-              type="button" 
-              onclick="toggleInputVisibility('adminModalKeyInput', 'eyeIconModal')" 
-              class="absolute right-3.5 top-3.5 text-slate-400 hover:text-white transition">
-              <i class="fa-solid fa-eye" id="eyeIconModal"></i>
-            </button>
-          </div>
-          <div class="flex justify-between items-center text-[11px] font-tech text-slate-400 mt-1.5">
-            <span data-i18n="req16Notice">लंबाई: ठीक 16 अंक</span>
-            <span id="secretKeyLengthCounter" class="text-konohaOrange font-bold">0 / 16</span>
-          </div>
-        </div>
-
-        <button type="submit" class="w-full py-3 bg-gradient-to-r from-konohaOrange to-konohaFlame hover:brightness-110 text-black font-bold uppercase rounded-xl transition font-tech flex items-center justify-center gap-2 shadow-rasengan">
-          <i class="fa-solid fa-unlock-keyhole"></i>
-          <span data-i18n="btnSecretUnlock">एडमिन कंट्रोल रूम खोलें</span>
-        </button>
-      </form>
-
-      <div class="text-[10px] text-slate-500 font-tech">
-        <span>Press <kbd class="px-1 py-0.5 bg-ninjaSlate border border-slate-700 rounded text-slate-300 font-mono">Shift + A</kbd> or Double-Click Logo anytime</span>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ================= SECRET ADMIN CONTROL ROOM MODAL ================= -->
-  <div id="adminControlRoomModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
-    <div class="max-w-4xl w-full bg-ninjaCard border-2 border-konohaOrange/70 rounded-3xl p-6 sm:p-8 shadow-2xl relative my-auto max-h-[92vh] overflow-y-auto">
-      
-      <div class="flex items-center justify-between border-b border-ninjaBorder pb-4 mb-6">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-konohaOrange/20 border border-konohaOrange text-konohaOrange flex items-center justify-center shadow-seal">
-            <i class="fa-solid fa-gears text-lg"></i>
-          </div>
-          <div>
-            <h3 class="text-xl sm:text-2xl font-black font-ninja uppercase tracking-wider text-white">
-              एडमिन गुप्त कंट्रोल रूम (Admin Control Room)
-            </h3>
-            <span class="text-xs text-chakraCyan font-tech">BALARAM LATHE MACHINE • 16-DIGIT PROTECTED</span>
-          </div>
-        </div>
-
-        <button onclick="closeAdminControlRoom()" class="px-3.5 py-1.5 bg-ninjaSlate hover:bg-red-900/40 text-slate-300 hover:text-red-400 rounded-xl border border-slate-700 text-xs font-tech transition">
-          <i class="fa-solid fa-xmark mr-1"></i> बंद करें (Exit)
-        </button>
-      </div>
-
-      <!-- Control 1: Master Emergency Kill Switch -->
-      <div id="adminKillSwitchBox" class="bg-ninjaSlate border-2 border-emerald-500/50 rounded-2xl p-5 sm:p-6 mb-6 shadow-lg">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-              <span class="text-xs font-tech uppercase tracking-widest text-emerald-400 font-bold" data-i18n="killSwitchLabel">MASTER KILL SWITCH</span>
-            </div>
-            <h4 id="adminKillStatusText" class="text-xl sm:text-2xl font-black font-ninja uppercase text-emerald-400 mt-1">
-              वेबसाइट चालू है (Website is LIVE)
-            </h4>
-            <p class="text-xs text-slate-300 max-w-lg mt-1" data-i18n="killSwitchDetail">
-              एक क्लिक में पूरी वेबसाइट बंद करें। बंद होने पर ग्राहकों को केवल इमरजेंसी मेंटेनेंस स्क्रीन और संपर्क नंबर दिखेगा।
-            </p>
-          </div>
-
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" id="adminMasterKillToggle" onchange="handleAdminKillToggle()" class="sr-only peer">
-            <div class="w-16 h-9 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all peer-checked:bg-emerald-500"></div>
-          </label>
-        </div>
-      </div>
-
-            <!-- Control 1.5: Free Cloud Database Realtime Sync (Firebase) -->
-      <div class="bg-ninjaSlate border border-chakraCyan/40 rounded-2xl p-5 mb-6 shadow-chakra">
-        <div class="flex items-center justify-between pb-3 mb-3 border-b border-ninjaBorder">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-cloud-bolt text-chakraCyan text-lg"></i>
-            <div>
-              <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white">
-                क्लाउड डेटाबेस सिंक (Global Realtime Lock)
-              </h4>
-              <span class="text-[10px] text-chakraCyan font-tech">FIREBASE REALTIME DB • DUNIYA BHAR ME INSTANT LOCK</span>
-            </div>
-          </div>
-          <span id="cloudStatusBadge" class="text-[10px] font-tech px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
-            Checking Cloud...
-          </span>
-        </div>
-
-        <p class="text-xs text-slate-300 mb-3 font-tech">
-          Firebase Realtime Database URL जोड़ें ताकि एक फोन से लॉक करने पर सभी ग्राहकों के फोन में तुरंत वेबसाइट बंद हो जाए।
-        </p>
-
-        <form onsubmit="handleAdminSaveCloudConfig(event)" class="space-y-3">
-          <div>
-            <label class="block text-[11px] font-tech uppercase text-slate-400 mb-1">Firebase Database URL (e.g. https://your-app-default-rtdb.firebaseio.com/)</label>
-            <input type="url" id="adminFirebaseDbUrlInput" placeholder="https://your-project-default-rtdb.firebaseio.com" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-chakraSpark font-mono focus:outline-none focus:border-chakraCyan">
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="submit" class="py-2 px-4 bg-chakraCyan hover:bg-chakraBlue text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center gap-1.5 shadow-chakra">
-              <i class="fa-solid fa-cloud-arrow-up"></i>
-              <span>क्लाउड URL सेव व कनेक्ट करें</span>
-            </button>
-            <button type="button" onclick="testCloudConnection()" class="py-2 px-3 bg-ninjaCard hover:bg-slate-700 text-slate-300 font-bold rounded-xl border border-slate-600 transition font-tech text-xs">
-              <i class="fa-solid fa-satellite-dish mr-1"></i> टेस्ट कनेक्शन
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Control 2: Contact Numbers & WhatsApp Setup (NEWLY ADDED) -->
-      <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5 mb-6">
-        <div class="flex items-center gap-2 mb-3 pb-2 border-b border-ninjaBorder">
-          <i class="fa-solid fa-phone text-konohaOrange"></i>
-          <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white">
-            वर्कशॉप संपर्क नंबर सेटिंग्स (Contact & WhatsApp Details)
-          </h4>
-        </div>
-        <form onsubmit="handleAdminSaveContacts(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1">कॉलिंग नंबर (Calling Phone - 10 Digits)</label>
-            <input type="tel" id="adminCallPhoneInput" required pattern="[0-9]{10}" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-konohaOrange">
-          </div>
-          <div>
-            <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1">व्हाट्सएप नंबर (WhatsApp - 10 Digits)</label>
-            <input type="tel" id="adminWaPhoneInput" required pattern="[0-9]{10}" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-konohaOrange">
-          </div>
-          <div class="sm:col-span-2">
-            <button type="submit" class="w-full py-2 bg-scrollGold hover:bg-amber-500 text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-1.5">
-              <i class="fa-solid fa-check"></i>
-              <span>संपर्क नंबर सेव करें (Update Numbers)</span>
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Control 3: UPI & QR Code Settings and Passcode Management -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5">
-          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-ninjaBorder">
-            <i class="fa-solid fa-qrcode text-konohaOrange"></i>
-            <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white" data-i18n="upiSettingsHeading">
-              UPI व QR कोड सेटिंग्स (Admin Only)
-            </h4>
-          </div>
-          <p class="text-[11px] text-slate-400 mb-3" data-i18n="upiSettingsInfo">
-            यहां दिया गया UPI ID और नाम तुरंत कस्टमर वाले QR कोड में अपडेट हो जाएगा।
-          </p>
-
-          <form onsubmit="handleAdminSaveUpiConfig(event)" class="space-y-3">
-            <div>
-              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblShopName">मर्चेंट / वर्कशॉप नाम</label>
-              <input type="text" id="adminMerchantInput" required class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-konohaOrange">
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblUpiId">दुकान की UPI ID (VPA)</label>
-              <input type="text" id="adminUpiInput" required class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-konohaOrange">
-            </div>
-
-            <button type="submit" class="w-full py-2.5 bg-konohaOrange hover:bg-konohaFlame text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-1.5 shadow-rasengan">
-              <i class="fa-solid fa-floppy-disk"></i>
-              <span data-i18n="btnSaveUpi">UPI सेटिंग्स सेव करें</span>
-            </button>
-          </form>
-        </div>
-
-        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5">
-          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-ninjaBorder">
-            <i class="fa-solid fa-lock text-chakraCyan"></i>
-            <h4 class="text-sm font-bold font-display uppercase tracking-wider text-white" data-i18n="passcodeHeading">
-              16-अंकों का मास्टर पासकोड बदलें
-            </h4>
-          </div>
-          <p class="text-[11px] text-slate-400 mb-3" data-i18n="passcodeInfo">
-            पासकोड हमेशा 16 अंकों का रखें ताकि कोई दूसरा इसे खोल न सके।
-          </p>
-
-          <form onsubmit="handleAdminChangeKey(event)" class="space-y-3">
-            <div>
-              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblNewKey">नया 16-अंक पासकोड *</label>
-              <input type="password" id="adminNewKey" maxlength="16" minlength="16" required placeholder="16 Digits" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-chakraCyan">
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-tech uppercase text-slate-300 mb-1" data-i18n="lblRepeatKey">दोबारा दर्ज करें *</label>
-              <input type="password" id="adminConfirmKey" maxlength="16" minlength="16" required placeholder="Repeat 16 Digits" class="w-full bg-ninjaCard border border-ninjaBorder rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-chakraCyan">
-            </div>
-
-            <button type="submit" class="w-full py-2.5 bg-chakraCyan hover:bg-chakraBlue text-black font-bold uppercase rounded-xl transition font-tech text-xs flex items-center justify-center gap-1.5 shadow-chakra">
-              <i class="fa-solid fa-check"></i>
-              <span data-i18n="btnSavePasscode">नया पासकोड सुरक्षित करें</span>
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <!-- Customer Submissions: Tickets & UTR Ledger -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-ninjaBorder pb-2">
-            <span class="text-xs font-bold font-tech uppercase text-konohaOrange">
-              <i class="fa-solid fa-wrench mr-1"></i> मशीन समस्या टिकट व फोटो/वीडियो (<span id="ticketCountBadge">0</span>)
-            </span>
-            <button onclick="clearAllTickets()" class="text-[11px] text-red-400 hover:underline">Clear</button>
-          </div>
-          <div id="adminTicketList" class="max-h-56 overflow-y-auto space-y-2 pr-1"></div>
-        </div>
-
-        <div class="bg-ninjaSlate border border-ninjaBorder rounded-2xl p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-ninjaBorder pb-2">
-            <span class="text-xs font-bold font-tech uppercase text-emerald-400">
-              <i class="fa-solid fa-receipt mr-1"></i> भुगतान UTR रसीदें (<span id="utrCountBadge">0</span>)
-            </span>
-            <button onclick="clearAllUtrs()" class="text-[11px] text-red-400 hover:underline">Clear</button>
-          </div>
-          <div id="adminUtrList" class="max-h-56 overflow-y-auto space-y-2 pr-1"></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
+  <!-- ================= ADMIN AUTH (MOVED TO DEDICATED admin.html) ================= -->
   <!-- ================= TOP HEADER (NAV & CONTROLS) ================= -->
   <header class="sticky top-0 z-40 bg-ninjaDark/95 backdrop-blur-md border-b border-ninjaBorder">
     <div class="container mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
@@ -1028,7 +771,7 @@
       <div class="flex items-center gap-3">
         <span>© 2026 Konoha Mechanical Works</span>
         <!-- Stealth Lock: Double security entry -->
-        <button onclick="openSecretAdminAuth()" class="text-slate-600 hover:text-slate-400 transition" title="Security Seal">
+        <button href="admin.html" class="text-slate-600 hover:text-slate-400 transition" title="Security Seal">
           <i class="fa-solid fa-lock text-[10px]"></i>
         </button>
       </div>
@@ -1261,16 +1004,16 @@
     const INITIAL_CONFIG = {
       isWebsiteLive: true,
       adminPasscodeHash: '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6',
-      merchantName: 'BALARAM LATHE MACHINE',
-      upiId: 'balaramlathe@upi',
-      phone: '9876543210',
-      whatsapp: '9876543210',
+      merchantName: 'BALARAM LATHE',
+      upiId: '9340254535@ybl',
+      phone: '9977639263',
+      whatsapp: '9340254535',
       firebaseDbUrl: 'https://balaram-leth-default-rtdb.firebaseio.com',
       tickets: [
         {
           id: 'TKT-108',
           name: 'दिलीप पटेल',
-          phone: '9876543210',
+          phone: '9977639263',
           machine: 'JCB 3DX / Backhoe Loader',
           category: 'Kingpin & Dipper Bushing',
           urgency: 'Urgent',
@@ -1434,28 +1177,18 @@
 
     /* 6. STEALTH ADMIN AUTHENTICATION */
     function triggerSecretAdminByLogo() {
-      showToast('गुप्त एडमिन गेट सक्रिय...', 'info');
-      openSecretAdminAuth();
+      window.location.href = 'admin.html';
     }
 
     window.addEventListener('keydown', (e) => {
       if (e.shiftKey && (e.key === 'A' || e.key === 'a')) {
         e.preventDefault();
-        openSecretAdminAuth();
+        window.location.href = 'admin.html';
       }
     });
 
     function openSecretAdminAuth() {
-      const modal = document.getElementById('secretAdminAuthModal');
-      const input = document.getElementById('adminModalKeyInput');
-      modal.classList.remove('hidden');
-      input.value = '';
-      input.focus();
-      onSecretAdminKeyInput('');
-    }
-
-    function closeSecretAdminAuth() {
-      document.getElementById('secretAdminAuthModal').classList.add('hidden');
+      window.location.href = 'admin.html';
     }
 
     function onSecretAdminKeyInput(val) {
@@ -1488,34 +1221,67 @@
 
     async function verifySecretAdminKey(e) {
       e.preventDefault();
-      const entered = document.getElementById('adminModalKeyInput').value.trim();
+      const enteredPasscode = document.getElementById('adminModalKeyInput').value.trim();
       const targetHash = appData.adminPasscodeHash || '37a3d6fa1d38a4d019c500a37d879b1aef953cd600b9024722317140664a15d6';
+      const fbPassInput = document.getElementById('adminFirebasePasswordInput');
+      const submitBtn = document.getElementById('btnAdminUnlockSubmit');
+      const submitText = document.getElementById('btnAdminUnlockText');
 
-      if (entered.length !== 16) {
-        showToast('त्रुटि: पासकोड ठीक 16 अंक का होना चाहिए!', 'error');
+      if (enteredPasscode.length !== 16) {
+        showToast('त्रुटि: 16-अंकों का पासकोड ठीक 16 अंक का होना चाहिए!', 'error');
         return;
       }
 
-      const enteredHash = await hashStringSHA256(entered);
-      if (enteredHash === targetHash) {
+      // Step 1: Check 16-Digit Master Passcode Cryptographic Hash
+      const enteredHash = await hashStringSHA256(enteredPasscode);
+      if (enteredHash !== targetHash) {
+        showToast('अमान्य 16-अंक पासकोड! प्रवेश अस्वीकृत।', 'error');
+        return;
+      }
+
+      // Step 2: Check Google Firebase Authentication
+      const currentUser = firebase.auth().currentUser;
+      if (currentUser && currentUser.email === ADMIN_EMAIL) {
+        // Already authenticated by Google's server!
         closeSecretAdminAuth();
         openAdminControlRoom();
-        showToast('प्रमाणीकरण सफल! एडमिन कंट्रोल रूम सक्रिय।', 'success');
-      } else {
-        showToast('अमान्य पासकोड! प्रवेश अस्वीकृत।', 'error');
+        showToast('Google प्रमाणीकरण सत्यापित! एडमिन कंट्रोल रूम सक्रिय।', 'success');
+        return;
+      }
+
+      // Not yet authenticated: Require Firebase password to authenticate with Google Server
+      const fbPassword = fbPassInput ? fbPassInput.value.trim() : '';
+      if (!fbPassword) {
+        showToast('कृपया Firebase Admin Password भी दर्ज करें!', 'error');
+        if (fbPassInput) fbPassInput.focus();
+        return;
+      }
+
+      // UI Loading indicator
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitText) submitText.textContent = 'Google सर्वर से वेरीफाई हो रहा है...';
+
+      try {
+        await firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL, fbPassword);
+        showToast('Google सर्वर प्रमाणीकरण सफल! एडमिन कंट्रोल रूम खुला।', 'success');
+        if (fbPassInput) fbPassInput.value = '';
+        closeSecretAdminAuth();
+        openAdminControlRoom();
+      } catch (authErr) {
+        console.error("Firebase Login Failed:", authErr);
+        let errorMsg = 'Google सर्वर ने पासवर्ड अस्वीकार किया!';
+        if (authErr.code === 'auth/wrong-password' || authErr.code === 'auth/invalid-credential') {
+          errorMsg = 'गलत पासवर्ड! Firebase Console वाला पासवर्ड डालें।';
+        } else if (authErr.code === 'auth/user-not-found') {
+          errorMsg = 'उपयोगकर्ता नहीं मिला! Firebase में ravikishan14709@gmail.com चेक करें।';
+        }
+        showToast(errorMsg, 'error');
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.textContent = 'एडमिन कंट्रोल रूम खोलें';
       }
     }
 
-    function openAdminControlRoom() {
-      document.getElementById('adminControlRoomModal').classList.remove('hidden');
-      syncAdminControlUI();
-    }
-
-    function closeAdminControlRoom() {
-      document.getElementById('adminControlRoomModal').classList.add('hidden');
-    }
-
-    /* 7. EMERGENCY KILL SWITCH */
     function applyKillSwitchState() {
       const maint = document.getElementById('maintenanceScreen');
       const toggle = document.getElementById('adminMasterKillToggle');
@@ -1557,22 +1323,43 @@
       }
     }
 
-        /* CLOUD DATABASE SYNC ENGINE (FIREBASE REALTIME DB - GLOBAL SYNC) */
+        /* CLOUD DATABASE SYNC ENGINE (OFFICIAL GOOGLE AUTH & REALTIME DB) */
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyDk1-GKv5ZAqU1ZClgIA8iRcO3TSeuL5zg",
+      authDomain: "balaram-leth.firebaseapp.com",
+      databaseURL: "https://balaram-leth-default-rtdb.firebaseio.com",
+      projectId: "balaram-leth",
+      storageBucket: "balaram-leth.firebasestorage.app",
+      messagingSenderId: "25292230989",
+      appId: "1:25292230989:web:69634ba4cebc15ccc6a704"
+    };
+
+    const ADMIN_EMAIL = "ravikishan14709@gmail.com";
     let firebaseDbInstance = null;
     let isCloudConnected = false;
-    const DEFAULT_CLOUD_DB = 'https://balaram-leth-default-rtdb.firebaseio.com';
+    let isFirebaseAuthActive = false;
 
     function initFirebaseCloudSync() {
-      const dbUrl = (appData.firebaseDbUrl || DEFAULT_CLOUD_DB).trim().replace(/\/$/, '');
       const badge = document.getElementById('cloudStatusBadge');
       const input = document.getElementById('adminFirebaseDbUrlInput');
-      if (input) input.value = dbUrl;
+      if (input) input.value = FIREBASE_CONFIG.databaseURL;
 
       try {
         if (!firebase.apps.length) {
-          firebase.initializeApp({ databaseURL: dbUrl });
+          firebase.initializeApp(FIREBASE_CONFIG);
         }
         firebaseDbInstance = firebase.database();
+
+        // Listen for Google Server Authentication State
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user && user.email === ADMIN_EMAIL) {
+            isFirebaseAuthActive = true;
+            updateAdminAuthStatusBadge(true, user.email);
+          } else {
+            isFirebaseAuthActive = false;
+            updateAdminAuthStatusBadge(false, null);
+          }
+        });
 
         // Listen in REAL TIME to global status changes across all devices worldwide
         const statusRef = firebaseDbInstance.ref('workshop_global_state');
@@ -1582,7 +1369,7 @@
             isCloudConnected = true;
             if (badge) {
               badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/50';
-              badge.textContent = '🟢 क्लाउड कनेक्टेड (Live Sync ON)';
+              badge.textContent = '🟢 क्लाउड कनेक्टेड (Google Live Sync ON)';
             }
 
             let needsSave = false;
@@ -1637,28 +1424,38 @@
               updateAllContactLinks();
               refreshCustomerQrCode();
             }
-          } else {
-            // First time cloud initialization: push current initial state to cloud
-            syncStateToCloud({
-              isWebsiteLive: appData.isWebsiteLive,
-              adminPasscodeHash: appData.adminPasscodeHash,
-              merchantName: appData.merchantName,
-              upiId: appData.upiId,
-              phone: appData.phone,
-              whatsapp: appData.whatsapp,
-              tickets: appData.tickets || [],
-              utrLogs: appData.utrLogs || []
-            });
           }
         }, (error) => {
           console.error("Firebase Sync Error:", error);
           if (badge) {
             badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-600/50';
-            badge.textContent = 'कनेक्शन एरर (Rules / URL चेक करें)';
+            badge.textContent = 'सुरक्षा एरर (Google Rules चेक करें)';
           }
         });
       } catch (err) {
         console.error("Firebase Init Error:", err);
+      }
+    }
+
+    function updateAdminAuthStatusBadge(isLoggedIn, email) {
+      const dot = document.getElementById('authStatusDot');
+      const txt = document.getElementById('authStatusText');
+      const passWrapper = document.getElementById('firebasePasswordWrapper');
+
+      if (isLoggedIn) {
+        if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping';
+        if (txt) {
+          txt.className = 'text-emerald-400 font-bold';
+          txt.textContent = 'Google Server Verified: ' + email;
+        }
+        if (passWrapper) passWrapper.classList.add('hidden');
+      } else {
+        if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+        if (txt) {
+          txt.className = 'text-slate-300 font-bold';
+          txt.textContent = 'Google Server: लॉगिन आवश्यक';
+        }
+        if (passWrapper) passWrapper.classList.remove('hidden');
       }
     }
 
@@ -1670,10 +1467,10 @@
       if (firebaseDbInstance) {
         try {
           firebaseDbInstance.ref('workshop_global_state').update(patchObj).then(() => {
-            showToast('क्लाउड पर तुरंत सिंक हो गया! सभी डिवाइस में अपडेट।', 'success');
+            showToast('क्लाउड पर सुरक्षित सिंक हो गया! सभी डिवाइस में अपडेट।', 'success');
           }).catch(err => {
             console.error("Cloud push failed:", err);
-            showToast('क्लाउड सिंक एरर: ' + err.message, 'error');
+            showToast('सर्वर सुरक्षा अस्वीकृत: ' + (err.code || err.message), 'error');
           });
         } catch (e) {
           console.error(e);
@@ -1681,11 +1478,18 @@
       }
     }
 
+    async function handleAdminFirebaseSignOut() {
+      try {
+        await firebase.auth().signOut();
+        showToast('Google एडमिन सत्र से लॉगआउट किया गया।', 'info');
+        closeAdminControlRoom();
+      } catch (err) {
+        showToast('लॉगआउट त्रुटि: ' + err.message, 'error');
+      }
+    }
+
     function handleAdminSaveCloudConfig(e) {
       e.preventDefault();
-      const url = document.getElementById('adminFirebaseDbUrlInput').value.trim();
-      appData.firebaseDbUrl = url || DEFAULT_CLOUD_DB;
-      saveAppData();
       initFirebaseCloudSync();
       syncStateToCloud({
         isWebsiteLive: appData.isWebsiteLive,
@@ -1695,7 +1499,7 @@
         upiId: appData.upiId,
         merchantName: appData.merchantName
       });
-      showToast('Firebase Cloud Database URL सुरक्षित!', 'success');
+      showToast('Google Cloud Database कनेक्टेड!', 'success');
     }
 
     function testCloudConnection() {
@@ -2017,159 +1821,6 @@
       setTimeout(() => {
         startTenMinutePaymentSession();
       }, 1500);
-    }
-
-    /* 11. ADMIN CONTROL ROOM ACTIONS */
-    function syncAdminControlUI() {
-      document.getElementById('adminMerchantInput').value = appData.merchantName || 'BALARAM LATHE MACHINE';
-      document.getElementById('adminUpiInput').value = appData.upiId || 'balaramlathe@upi';
-      document.getElementById('adminCallPhoneInput').value = appData.phone || '9876543210';
-      document.getElementById('adminWaPhoneInput').value = appData.whatsapp || '9876543210';
-
-      applyKillSwitchState();
-      renderAdminTicketsList();
-      renderAdminUtrList();
-    }
-
-    function updateAllContactLinks() {
-      const phone = appData.phone || '9876543210';
-      const wa = appData.whatsapp || '9876543210';
-      const tel = `tel:+91${phone}`;
-      const waLink = `https://wa.me/91${wa}`;
-
-      const quickCall = document.getElementById('headerQuickCall');
-      if (quickCall) quickCall.href = tel;
-      const quickCallTxt = document.getElementById('headerQuickCallText');
-      if (quickCallTxt) quickCallTxt.textContent = '+91 ' + phone;
-
-      const dCall = document.getElementById('dispatchCallBtn');
-      if (dCall) dCall.href = tel;
-      const dCallTxt = document.getElementById('dispatchCallText');
-      if (dCallTxt) dCallTxt.textContent = '+91 ' + phone;
-
-      const dWaTxt = document.getElementById('dispatchWaText');
-      if (dWaTxt) dWaTxt.textContent = '+91 ' + wa;
-
-      const mCall = document.getElementById('maintCallBtn');
-      if (mCall) mCall.href = tel;
-      const mWa = document.getElementById('maintWaBtn');
-      if (mWa) mWa.href = waLink;
-    }
-
-    function handleAdminSaveContacts(e) {
-      e.preventDefault();
-      appData.phone = document.getElementById('adminCallPhoneInput').value.trim();
-      appData.whatsapp = document.getElementById('adminWaPhoneInput').value.trim();
-      saveAppData();
-      updateAllContactLinks();
-      syncStateToCloud({ phone: appData.phone, whatsapp: appData.whatsapp });
-      showToast('संपर्क नंबर सफलतापूर्वक अपडेट कर दिए गए!', 'success');
-    }
-
-    function handleAdminSaveUpiConfig(e) {
-      e.preventDefault();
-      appData.merchantName = document.getElementById('adminMerchantInput').value.trim();
-      appData.upiId = document.getElementById('adminUpiInput').value.trim();
-      saveAppData();
-      refreshCustomerQrCode();
-      syncStateToCloud({ merchantName: appData.merchantName, upiId: appData.upiId });
-      showToast('UPI मर्चेंट सेटिंग्स सुरक्षित!', 'success');
-    }
-
-    async function handleAdminChangeKey(e) {
-      e.preventDefault();
-      const k1 = document.getElementById('adminNewKey').value.trim();
-      const k2 = document.getElementById('adminConfirmKey').value.trim();
-
-      if (k1.length !== 16) {
-        showToast('त्रुटि: कोड ठीक 16 अंक का होना चाहिए!', 'error');
-        return;
-      }
-      if (k1 !== k2) {
-        showToast('त्रुटि: दोनों कोड मेल नहीं खा रहे हैं!', 'error');
-        return;
-      }
-
-      appData.adminPasscodeHash = await hashStringSHA256(k1);
-      saveAppData();
-      syncStateToCloud({ adminPasscodeHash: appData.adminPasscodeHash });
-      showToast('16-अंकों का मास्टर पासकोड बदला गया व क्लाउड पर सुरक्षित हुआ!', 'success');
-      document.getElementById('adminNewKey').value = '';
-      document.getElementById('adminConfirmKey').value = '';
-    }
-
-    function renderAdminTicketsList() {
-      const container = document.getElementById('adminTicketList');
-      const badge = document.getElementById('ticketCountBadge');
-      const list = appData.tickets || [];
-      badge.textContent = list.length;
-
-      if (list.length === 0) {
-        container.innerHTML = `<div class="text-[11px] text-slate-500 text-center py-4 font-tech">कोई टिकट दर्ज नहीं है।</div>`;
-        return;
-      }
-
-      container.innerHTML = list.map(t => `
-        <div class="p-3 rounded-xl bg-ninjaCard border border-ninjaBorder text-[11px] space-y-1.5">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-konohaOrange font-mono">${t.id}</span>
-            <span class="text-slate-400 font-tech">${t.time}</span>
-          </div>
-          <div class="text-white font-bold">${t.name} (${t.phone})</div>
-          <div class="text-chakraCyan font-tech">${t.machine} • ${t.category}</div>
-          <div class="text-slate-300">${t.desc}</div>
-          ${t.media ? `
-            <div class="pt-1">
-              ${t.media.type === 'video' ? `
-                <video src="${t.media.data}" controls class="max-h-36 rounded-lg border border-slate-700"></video>
-              ` : `
-                <a href="${t.media.data}" target="_blank">
-                  <img src="${t.media.data}" class="max-h-28 rounded-lg border border-slate-700 object-cover" alt="Ticket Attachment">
-                </a>
-              `}
-            </div>
-          ` : ''}
-        </div>
-      `).join('');
-    }
-
-    function renderAdminUtrList() {
-      const container = document.getElementById('adminUtrList');
-      const badge = document.getElementById('utrCountBadge');
-      const list = appData.utrLogs || [];
-      badge.textContent = list.length;
-
-      if (list.length === 0) {
-        container.innerHTML = `<div class="text-[11px] text-slate-500 text-center py-4 font-tech">कोई UTR रसीद नहीं है।</div>`;
-        return;
-      }
-
-      container.innerHTML = list.map(u => `
-        <div class="p-2.5 rounded-xl bg-ninjaCard border border-ninjaBorder text-[11px] space-y-1">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-emerald-400 font-mono">${u.id} ${u.txnId ? `• <span class="text-chakraCyan font-mono text-[10px]">${u.txnId}</span>` : ''}</span>
-            <span class="font-bold text-konohaOrange">₹${u.amount}</span>
-          </div>
-          <div class="text-white font-bold">${u.name} (${u.phone})</div>
-          <div class="text-slate-300 font-mono">UTR: <b class="text-emerald-300">${u.utr}</b> via ${u.app}</div>
-        </div>
-      `).join('');
-    }
-
-    function clearAllTickets() {
-      appData.tickets = [];
-      saveAppData();
-      syncStateToCloud({ tickets: [] });
-      renderAdminTicketsList();
-      showToast('सभी टिकट हटाए गए', 'info');
-    }
-
-    function clearAllUtrs() {
-      appData.utrLogs = [];
-      saveAppData();
-      syncStateToCloud({ utrLogs: [] });
-      renderAdminUtrList();
-      showToast('सभी UTR हटाए गए', 'info');
     }
 
     /* 12. INITIALIZATION */
