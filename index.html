@@ -1287,8 +1287,10 @@
       if (!maint) return;
 
       if (appData.isWebsiteLive) {
+        maint.style.display = 'none';
         maint.classList.add('hidden');
       } else {
+        maint.style.display = 'flex';
         maint.classList.remove('hidden');
       }
     }
@@ -1342,8 +1344,8 @@
             let needsSave = false;
 
             // 1. Sync Website Lockdown across all devices
-            if (typeof cloudData.isWebsiteLive !== 'undefined' && appData.isWebsiteLive !== cloudData.isWebsiteLive) {
-              appData.isWebsiteLive = cloudData.isWebsiteLive;
+            if (typeof cloudData.isWebsiteLive !== 'undefined') {
+              appData.isWebsiteLive = Boolean(cloudData.isWebsiteLive);
               applyKillSwitchState();
               needsSave = true;
             }
