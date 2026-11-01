@@ -1282,28 +1282,14 @@
       }
     }
 
-    function applyKillSwitchState() {
+        function applyKillSwitchState() {
       const maint = document.getElementById('maintenanceScreen');
-      const toggle = document.getElementById('adminMasterKillToggle');
-      const statusText = document.getElementById('adminKillStatusText');
-      const box = document.getElementById('adminKillSwitchBox');
+      if (!maint) return;
 
       if (appData.isWebsiteLive) {
         maint.classList.add('hidden');
-        if (toggle) toggle.checked = true;
-        if (statusText) {
-          statusText.textContent = (currentLanguage === 'hi') ? "वेबसाइट चालू है (Website is LIVE)" : "Website is LIVE (Online)";
-          statusText.className = "text-xl sm:text-2xl font-black font-ninja uppercase text-emerald-400 mt-1";
-        }
-        if (box) box.className = "bg-ninjaSlate border-2 border-emerald-500/50 rounded-2xl p-5 sm:p-6 mb-6 shadow-lg";
       } else {
         maint.classList.remove('hidden');
-        if (toggle) toggle.checked = false;
-        if (statusText) {
-          statusText.textContent = (currentLanguage === 'hi') ? "वेबसाइट बंद है (LOCKED DOWN)" : "Website is LOCKED DOWN";
-          statusText.className = "text-xl sm:text-2xl font-black font-ninja uppercase text-red-500 mt-1";
-        }
-        if (box) box.className = "bg-ninjaSlate border-2 border-red-500/60 rounded-2xl p-5 sm:p-6 mb-6 shadow-lg";
       }
     }
 
@@ -1339,27 +1325,12 @@
     let isCloudConnected = false;
     let isFirebaseAuthActive = false;
 
-    function initFirebaseCloudSync() {
-      const badge = document.getElementById('cloudStatusBadge');
-      const input = document.getElementById('adminFirebaseDbUrlInput');
-      if (input) input.value = FIREBASE_CONFIG.databaseURL;
-
+        function initFirebaseCloudSync() {
       try {
         if (!firebase.apps.length) {
           firebase.initializeApp(FIREBASE_CONFIG);
         }
         firebaseDbInstance = firebase.database();
-
-        // Listen for Google Server Authentication State
-        firebase.auth().onAuthStateChanged((user) => {
-          if (user && user.email === ADMIN_EMAIL) {
-            isFirebaseAuthActive = true;
-            updateAdminAuthStatusBadge(true, user.email);
-          } else {
-            isFirebaseAuthActive = false;
-            updateAdminAuthStatusBadge(false, null);
-          }
-        });
 
         // Listen in REAL TIME to global status changes across all devices worldwide
         const statusRef = firebaseDbInstance.ref('workshop_global_state');
@@ -1367,10 +1338,6 @@
           const cloudData = snapshot.val();
           if (cloudData) {
             isCloudConnected = true;
-            if (badge) {
-              badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/50';
-              badge.textContent = '🟢 क्लाउड कनेक्टेड (Google Live Sync ON)';
-            }
 
             let needsSave = false;
 
@@ -1381,13 +1348,7 @@
               needsSave = true;
             }
 
-            // 2. Sync Master Passcode Hash
-            if (cloudData.adminPasscodeHash && cloudData.adminPasscodeHash !== appData.adminPasscodeHash) {
-              appData.adminPasscodeHash = cloudData.adminPasscodeHash;
-              needsSave = true;
-            }
-
-            // 3. Sync Contacts & Numbers
+            // 2. Sync Contacts & Numbers
             if (cloudData.phone && cloudData.phone !== appData.phone) {
               appData.phone = cloudData.phone;
               needsSave = true;
@@ -1407,18 +1368,6 @@
               needsSave = true;
             }
 
-            // 5. Sync Tickets & Payment Ledger
-            if (Array.isArray(cloudData.tickets)) {
-              appData.tickets = cloudData.tickets;
-              renderAdminTicketsList();
-              needsSave = true;
-            }
-            if (Array.isArray(cloudData.utrLogs)) {
-              appData.utrLogs = cloudData.utrLogs;
-              renderAdminUtrList();
-              needsSave = true;
-            }
-
             if (needsSave) {
               localStorage.setItem('balaram_shinobi_v3', JSON.stringify(appData));
               updateAllContactLinks();
@@ -1427,10 +1376,6 @@
           }
         }, (error) => {
           console.error("Firebase Sync Error:", error);
-          if (badge) {
-            badge.className = 'text-[10px] font-tech px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-600/50';
-            badge.textContent = 'सुरक्षा एरर (Google Rules चेक करें)';
-          }
         });
       } catch (err) {
         console.error("Firebase Init Error:", err);
